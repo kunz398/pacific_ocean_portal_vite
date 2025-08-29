@@ -1,0 +1,1540 @@
+/* bootstrap  */
+/*@import "bootstrap/dist/css/bootstrap.min.css";*/
+
+*{
+    margin: 0;
+    padding: 0;
+}
+
+:root {
+  /* Light mode palette */
+  --color-primary: #2563eb;
+  --color-secondary: #64748b;
+  --color-accent: #f59e42;
+  --color-background: #f8fafc;
+  --color-surface: #ffffff;
+  --color-text: #1e293b;
+  --color-success: #22c55e;
+  --color-warning: #facc15;
+  --color-error: #ef4444;
+  --color-info: #0ea5e9;
+  --btn-secondary: #1c54b2;
+  --btn-secondary-hover: #174a8c;
+  --card-shadow: 0 2px 8px rgba(0,0,0,0.10);
+  --card-shadow-hover: 0 4px 16px rgba(0,0,0,0.18);
+}
+body {
+  background-color: var(--color-background);
+  color: var(--color-text);
+}
+
+body.dark-mode {
+  /* Dark mode palette */
+  --color-primary: #60a5fa;
+  --color-secondary: #6b7280;
+  --color-accent: #fbbf24;
+  --color-background: #2e2f33;
+  --color-surface: #3f4854;
+  --color-text: #f1f5f9;
+  --color-border: #6b7280;
+  --color-success: #4ade80;
+  --color-warning: #fde047;
+  --color-error: #f87171;
+  --color-info: #38bdf8;
+  --btn-secondary: #3f4854;
+  --btn-secondary-hover: #23242a;
+  --card-shadow: 0 2px 8px rgba(0,0,0,0.32);
+  --card-shadow-hover: 0 4px 16px rgba(0,0,0,0.44);
+  background-color: var(--color-background) !important;
+  color: var(--color-text) !important;
+}
+
+/* General UI elements - exclude modal accordions */
+.card, .modal-content, .offcanvas-end, .list-group-item, .form-control, .dropdown-menu {
+  background-color: var(--color-surface) !important;
+  color: var(--color-text) !important;
+  border-color: var(--color-secondary) !important;
+}
+
+/* Accordion styling - exclude modal accordions */
+.accordion:not(.explore-modal .accordion), 
+.accordion-item:not(.explore-modal .accordion-item) {
+  background-color: var(--color-surface) !important;
+  color: var(--color-text) !important;
+  border-color: var(--color-secondary) !important;
+}
+
+/* Dark mode border enhancements - exclude modal accordions */
+body.dark-mode .card,
+body.dark-mode .modal-content,
+body.dark-mode .offcanvas-end,
+body.dark-mode .accordion:not(.explore-modal .accordion),
+body.dark-mode .accordion-item:not(.explore-modal .accordion-item),
+body.dark-mode .list-group-item,
+body.dark-mode .form-control,
+body.dark-mode .dropdown-menu,
+body.dark-mode .btn,
+body.dark-mode .navbar,
+body.dark-mode .modal-header,
+body.dark-mode .modal-footer,
+body.dark-mode .offcanvas-header,
+body.dark-mode .offcanvas-body {
+  border: 1px solid #6b7280;
+}
+
+/* Ensure specific elements have visible borders in dark mode */
+body.dark-mode .card {
+  border: 1px solid #6b7280 !important;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.32) !important;
+}
+
+body.dark-mode .modal-content {
+  border: 1px solid #6b7280 !important;
+}
+
+body.dark-mode .form-control {
+  border: 1px solid #6b7280 !important;
+}
+
+body.dark-mode .dropdown-menu {
+  border: 1px solid #6b7280 !important;
+}
+
+/* Dark mode select arrow styling - Force override Bootstrap defaults */
+body.dark-mode .form-select,
+body.dark-mode .form-select:focus,
+body.dark-mode .form-select:hover,
+body.dark-mode .form-select:active,
+body.dark-mode select.form-select,
+body.dark-mode select.form-select:focus,
+body.dark-mode select.form-select:hover,
+body.dark-mode select.form-select:active {
+  background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3e%3cpath fill='none' stroke='%23ffffff' stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='m1 6 7 7 7-7'/%3e%3c/svg%3e") !important;
+  background-repeat: no-repeat !important;
+  background-position: right 0.75rem center !important;
+  background-size: 16px 12px !important;
+}
+
+body.dark-mode .accordion-item:not(.explore-modal .accordion-item) {
+  border: 1px solid #6b7280 !important;
+}
+
+body.dark-mode .list-group-item {
+  border: 1px solid #6b7280 !important;
+}
+
+/* Additional dark mode border fixes */
+body.dark-mode .table {
+  border-color: #6b7280 !important;
+}
+
+body.dark-mode .table td,
+body.dark-mode .table th {
+  border-color: #6b7280 !important;
+}
+
+/* Remove global dark-mode button border rules to avoid conflicts with modal pill styles */
+
+/* Ensure offcanvas elements have borders */
+body.dark-mode .offcanvas {
+  border: 1px solid #6b7280 !important;
+}
+
+body.dark-mode .offcanvas-header {
+  border-bottom: 1px solid #6b7280 !important;
+}
+
+body.dark-mode .offcanvas-body {
+  border-top: 1px solid #6b7280 !important;
+}
+
+/* Modal borders */
+body.dark-mode .modal-header {
+  border-bottom: 1px solid #6b7280 !important;
+}
+
+body.dark-mode .modal-footer {
+  border-top: 1px solid #6b7280 !important;
+}
+.card-title, .modal-title, .offcanvas-title, .accordion-header, .navbar-brand {
+  color: var(--color-primary) !important;
+}
+/* Remove global button background/border rules to avoid conflicts with modal pill styles */
+.alert-success {
+  background-color: var(--color-success) !important;
+  color: #fff !important;
+}
+.alert-warning {
+  background-color: var(--color-warning) !important;
+  color: #1e293b !important;
+}
+.alert-danger {
+  background-color: var(--color-error) !important;
+  color: #fff !important;
+}
+.alert-info {
+  background-color: var(--color-info) !important;
+  color: #fff !important;
+}
+
+/* Inputs and dropdowns */
+input, textarea, select, .dropdown-menu {
+  background-color: var(--color-surface) !important;
+  color: var(--color-text) !important;
+  border-color: var(--color-secondary) !important;
+}
+/* Remove box-shadow for a cleaner look */
+.card, .modal-content, .offcanvas-end, .btn, .form-control {
+  box-shadow: none !important;
+}
+
+/* ================== bootstrap behavior change ======================================= */
+/* ============= form ================= */
+.form-control{
+    border-radius: var(--bootstrap-field-radius);
+  }
+  .form-control:focus {
+    border-color: var(--bootstrap-active-field-color);
+    box-shadow: none;
+    
+    /* border: 1px solid green; */
+    /* border-color: #ff80ff; */
+    /* box-shadow: 0px 1px 1px rgba(0, 0, 0, 0.075) inset, 0px 0px 8px rgba(255, 100, 255, 0.5); */
+  }
+
+/* Remove border from station search input */
+.station-search-row .form-control {
+  border: none !important;
+  border-color: transparent !important;
+  outline: none !important;
+  box-shadow: none !important;
+}
+
+.station-search-row .form-control:focus {
+  border: none !important;
+  border-color: transparent !important;
+  outline: none !important;
+  box-shadow: none !important;
+}
+
+/* Override dark mode border for station search input */
+body.dark-mode .station-search-row .form-control {
+  border: none !important;
+  border-color: transparent !important;
+  outline: none !important;
+  box-shadow: none !important;
+}
+
+body.dark-mode .station-search-row .form-control:focus {
+  border: none !important;
+  border-color: transparent !important;
+  outline: none !important;
+  box-shadow: none !important;
+}
+
+/* Remove border from station search button */
+.station-search-row .btn {
+  border: none !important;
+  border-color: transparent !important;
+  outline: none !important;
+  box-shadow: none !important;
+}
+
+.station-search-row .btn:focus {
+  border: none !important;
+  border-color: transparent !important;
+  outline: none !important;
+  box-shadow: none !important;
+}
+
+/* Override dark mode border for station search button */
+body.dark-mode .station-search-row .btn {
+  border: none !important;
+  border-color: transparent !important;
+  outline: none !important;
+  box-shadow: none !important;
+}
+
+body.dark-mode .station-search-row .btn:focus {
+  border: none !important;
+  border-color: transparent !important;
+  outline: none !important;
+  box-shadow: none !important;
+}
+
+/* --- Dark mode styles start --- */
+body.dark-mode {
+  background-color: var(--color-background) !important;
+  color: var(--color-text) !important;
+}
+body.dark-mode .navbar,
+body.dark-mode .navbar-brand,
+body.dark-mode .navbar-nav,
+body.dark-mode .modal-content {
+  background-color: var(--color-surface) !important;
+  color: var(--color-text) !important;
+}
+body.dark-mode .card,
+body.dark-mode .list-group-item,
+body.dark-mode .form-control {
+  background-color: var(--color-surface) !important;
+  color: var(--color-text) !important;
+  border-color: var(--color-border) !important;
+}
+/* Preserve original button colors in dark mode */
+/* Remove global dark-mode button background/border rules to avoid conflicts with modal pill styles */
+body.dark-mode input,
+body.dark-mode textarea,
+body.dark-mode select {
+  background-color: var(--color-surface) !important;
+  color: var(--color-text) !important;
+  border-color: var(--color-border) !important;
+}
+body.dark-mode .dropdown-menu {
+  background-color: var(--color-surface) !important;
+  color: var(--color-text) !important;
+}
+body.dark-mode .modal-header,
+body.dark-mode .modal-footer {
+  background-color: var(--color-surface) !important;
+  color: var(--color-text) !important;
+}
+body.dark-mode .table {
+  background-color: var(--color-surface) !important;
+  color: var(--color-text) !important;
+}
+/* --- Dark mode styles end --- */
+
+/* --- Dark mode sidebar overrides start --- */
+body.dark-mode #sidebar-wrapper {
+  background-color: var(--color-surface) !important;
+  color: var(--color-text) !important;
+  border: none !important;
+  border-right: 1px solid #6b7280 !important;
+}
+
+/* Sidebar specific border styling for dark mode */
+body.dark-mode .sidebar,
+body.dark-mode .sidebar-wrapper,
+body.dark-mode .desktop-sidebar,
+body.dark-mode .mobile-sidebar {
+  border: none !important;
+  border-right: 1px solid #6b7280 !important;
+}
+
+/* Enhanced sidebar styling to ensure persistence across navigation */
+.desktop-sidebar,
+.mobile-sidebar {
+  border-right: 1px solid var(--color-border, #dee2e6) !important;
+  background-color: var(--color-surface, #ffffff) !important;
+  color: var(--color-text, #1e293b) !important;
+}
+
+/* Force sidebar borders to persist */
+body:has(.desktop-sidebar) .desktop-sidebar,
+body:has(.mobile-sidebar) .mobile-sidebar {
+  border-right: 1px solid var(--color-border, #dee2e6) !important;
+}
+
+body.dark-mode:has(.desktop-sidebar) .desktop-sidebar,
+body.dark-mode:has(.mobile-sidebar) .mobile-sidebar {
+  border-right: 1px solid var(--color-border, #6b7280) !important;
+}
+
+/* Ensure sidebar content maintains styling */
+.desktop-sidebar .sidebar-scrollable,
+.mobile-sidebar .sidebar-scrollable {
+  background-color: var(--color-surface, #ffffff) !important;
+  color: var(--color-text, #1e293b) !important;
+}
+
+body.dark-mode .desktop-sidebar .sidebar-scrollable,
+body.dark-mode .mobile-sidebar .sidebar-scrollable {
+  background-color: var(--color-surface, #3f4854) !important;
+  color: var(--color-text, #f1f5f9) !important;
+}
+
+body.dark-mode .sidebar-header,
+body.dark-mode .sidebar-footer {
+  border-bottom: 1px solid #6b7280 !important;
+}
+
+body.dark-mode .sidebar-content {
+  border-top: 1px solid #6b7280 !important;
+}
+body.dark-mode #sidebar-wrapper .sidebar-heading {
+  background-color: var(--color-surface) !important;
+  color: var(--color-text) !important;
+}
+body.dark-mode #sidebar-wrapper .list-group {
+  background-color: var(--color-surface) !important;
+  color: var(--color-text) !important;
+}
+body.dark-mode #sidebar-wrapper select,
+body.dark-mode #sidebar-wrapper option {
+  background-color: var(--color-surface) !important;
+  color: var(--color-text) !important;
+}
+body.dark-mode #sidebar-wrapper button {
+  background-color: var(--color-border) !important;
+  color: var(--color-text) !important;
+  border-color: var(--color-surface) !important;
+}
+/* --- Dark mode sidebar overrides end --- */
+
+/* --- Dark mode navbar overrides start --- */
+body.dark-mode .navbar {
+  background-color: var(--color-surface) !important;
+  color: var(--color-text) !important;
+  border: none !important;
+}
+
+/* Ensure navbar title stays blue in dark mode */
+body.dark-mode .navbar .navbar-title {
+  color: var(--color-primary) !important;
+}
+
+/* Chart.js text styling for dark mode */
+body.dark-mode canvas {
+  color: #ffffff !important;
+}
+
+body.dark-mode .chartjs-tooltip {
+  background-color: var(--color-surface) !important;
+  color: #ffffff !important;
+  border-color: var(--color-border) !important;
+}
+
+/* Modal title white text */
+.modal-header .modal-title {
+  color: white !important;
+}
+
+/* Sharp edges for modals */
+.modal-content {
+  border-radius: 0 !important;
+}
+
+.modal-header {
+  border-radius: 0 !important;
+}
+
+.modal-body {
+  border-radius: 0 !important;
+}
+
+.modal-footer {
+  border-radius: 0 !important;
+}
+body.dark-mode .navbar-brand {
+  color: var(--color-text) !important;
+}
+body.dark-mode .navbar-brand:hover,
+body.dark-mode .navbar-brand:focus {
+  color: var(--color-accent) !important;
+}
+body.dark-mode .navbar-nav .nav-link,
+body.dark-mode .navbar-nav .nav-link.active,
+body.dark-mode .navbar-nav .show > .nav-link {
+  color: var(--color-text) !important;
+}
+
+body.dark-mode .navbar-toggler {
+  color: var(--color-text) !important;
+  border-color: var(--color-border) !important;
+}
+body.dark-mode .navbar-toggler-icon {
+  background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 30 30'%3e%3cpath stroke='rgba%28 255, 255, 255, 0.85 %29' stroke-linecap='round' stroke-miterlimit='10' stroke-width='2' d='M4 7h22M4 15h22M4 23h22'/%3e%3c/svg%3e");
+}
+body.dark-mode .dropdown-menu {
+  background-color: var(--color-surface) !important;
+  color: var(--color-text) !important;
+}
+body.dark-mode .dropdown-item {
+  color: var(--color-text) !important;
+}
+body.dark-mode .dropdown-item:hover,
+body.dark-mode .dropdown-item:focus {
+  background-color: var(--color-border) !important;
+  color: var(--color-accent) !important;
+}
+/* --- Dark mode navbar overrides end --- */
+
+/* --- Dark mode ExploreModal (model.jsx) overrides start --- */
+body.dark-mode .explore-modal .modal-content,
+body.dark-mode .explore-modal .modal-header,
+body.dark-mode .explore-modal .modal-body,
+body.dark-mode .explore-modal .modal-footer {
+  background-color: #ffffff !important;
+  color: #1e293b !important;
+}
+/* Lighten footer divider line specifically in dark mode */
+body.dark-mode .explore-modal .modal-footer { border-top:1px solid #dddddd !important; }
+body.dark-mode .explore-modal .modal-title {
+  color: #2563eb !important;
+}
+body.dark-mode .explore-modal .btn-light {
+  background-color: #ffffff !important;
+  color: #1e293b !important;
+  border-color: #dee2e6 !important;
+}
+body.dark-mode .explore-modal .btn-primary {
+  background-color: #2563eb !important;
+  color: #ffffff !important;
+  border-color: #2563eb !important;
+}
+body.dark-mode .explore-modal .btn-primary:hover {
+  background-color: #1d4ed8 !important;
+  border-color: #1d4ed8 !important;
+}
+body.dark-mode .explore-modal .btn-light:hover {
+  background-color: #f8f9fa !important;
+  color: #1e293b !important;
+}
+body.dark-mode .explore-modal .scrollable-column {
+  background-color: #ffffff !important;
+  color: #1e293b !important;
+}
+body.dark-mode .explore-modal .btn {
+  color: #1e293b !important;
+}
+/* Active button text color for both light and dark modes */
+.explore-modal .btn.active {
+  color: #ffffff !important;
+}
+
+body.dark-mode .explore-modal .btn.active {
+  color: #ffffff !important;
+}
+body.dark-mode .explore-modal .spinner-border {
+  color: #2563eb !important;
+}
+
+/* Removed accordion styling - using Bootstrap defaults */
+
+/* AccordionMetadata component styling within explore-modal */
+body.dark-mode .explore-modal .accordionmetadata {
+  background-color: #ffffff !important;
+  color: #1e293b !important;
+}
+
+body.dark-mode .explore-modal .accordionmetadata .item {
+  color: #64748b !important;
+}
+
+body.dark-mode .explore-modal .accordionmetadata p {
+  color: #1e293b !important;
+}
+
+body.dark-mode .explore-modal .accordionmetadata h5 {
+  color: #2563eb !important;
+}
+
+body.dark-mode .explore-modal .accordionmetadata button {
+  background-color: #2563eb !important;
+  color: #ffffff !important;
+  border: none !important;
+}
+
+body.dark-mode .explore-modal .accordionmetadata button:hover {
+  background-color: #1d4ed8 !important;
+}
+
+/* Removed conflicting accordion button styles - using Bootstrap defaults */
+
+/* Fix the dark gray preview area to be white */
+body.dark-mode .explore-modal .accordionmetadata > div {
+  background-color: #ffffff !important;
+  color: #1e293b !important;
+}
+
+body.dark-mode .explore-modal .accordionmetadata > div > div {
+  background-color: #ffffff !important;
+  color: #1e293b !important;
+}
+
+/* Specific styling for the "Select a dataset" div */
+body.dark-mode .explore-modal .accordionmetadata div[style*="fontSize: 18"] {
+  background-color: #ffffff !important;
+  color: #64748b !important;
+}
+
+/* Removed scrollable-column text overrides - using Bootstrap defaults for accordions */
+
+/* Removed accordion text overrides - using Bootstrap defaults */
+
+/* Removed modal body overrides for accordion column - using Bootstrap defaults */
+
+/* Special handling for the map column - preserve map visibility */
+body.dark-mode .explore-modal .modal-body .col-md-8 {
+  background-color: #ffffff !important;
+  color: #1e293b !important;
+}
+
+/* Preserve map container transparency */
+body.dark-mode .explore-modal .modal-body .col-md-8 .small-map-outer,
+body.dark-mode .explore-modal .modal-body .col-md-8 .small-map-container,
+body.dark-mode .explore-modal .modal-body .col-md-8 #map2 {
+  background-color: transparent !important;
+}
+
+/* Preserve all Leaflet map elements */
+body.dark-mode .explore-modal .modal-body .col-md-8 .leaflet-container,
+body.dark-mode .explore-modal .modal-body .col-md-8 .leaflet-pane,
+body.dark-mode .explore-modal .modal-body .col-md-8 .leaflet-map-pane,
+body.dark-mode .explore-modal .modal-body .col-md-8 .leaflet-tile-pane,
+body.dark-mode .explore-modal .modal-body .col-md-8 .leaflet-overlay-pane,
+body.dark-mode .explore-modal .modal-body .col-md-8 .leaflet-marker-pane,
+body.dark-mode .explore-modal .modal-body .col-md-8 .leaflet-shadow-pane,
+body.dark-mode .explore-modal .modal-body .col-md-8 .leaflet-tooltip-pane,
+body.dark-mode .explore-modal .modal-body .col-md-8 .leaflet-popup-pane {
+  background-color: transparent !important;
+}
+
+/* Preserve map tiles */
+body.dark-mode .explore-modal .modal-body .col-md-8 .leaflet-tile {
+  background-color: transparent !important;
+}
+
+/* Preserve map controls but style them appropriately */
+body.dark-mode .explore-modal .modal-body .col-md-8 .leaflet-control-attribution {
+  background-color: rgba(255, 255, 255, 0.9) !important;
+  color: #1e293b !important;
+}
+
+body.dark-mode .explore-modal .modal-body .col-md-8 .leaflet-control-attribution a {
+  color: #2563eb !important;
+}
+
+body.dark-mode .explore-modal .modal-body .col-md-8 .leaflet-control-zoom {
+  background-color: #ffffff !important;
+  border: 1px solid #e5e7eb !important;
+}
+
+body.dark-mode .explore-modal .modal-body .col-md-8 .leaflet-control-zoom a {
+  background-color: #ffffff !important;
+  color: #1e293b !important;
+  border: 1px solid #e5e7eb !important;
+}
+
+body.dark-mode .explore-modal .modal-body .col-md-8 .leaflet-control-zoom a:hover {
+  background-color: #f8f9fa !important;
+  color: #1e293b !important;
+}
+
+/* Override any specific text colors that might be inherited */
+body.dark-mode .explore-modal .text-muted {
+  color: #64748b !important;
+}
+
+body.dark-mode .explore-modal .text-primary {
+  color: #2563eb !important;
+}
+
+body.dark-mode .explore-modal .text-secondary {
+  color: #64748b !important;
+}
+
+body.dark-mode .explore-modal a {
+  color: #2563eb !important;
+}
+
+body.dark-mode .explore-modal a:hover {
+  color: #1d4ed8 !important;
+}
+
+/* Make Add to Map button blue in explore-modal */
+body.dark-mode .explore-modal .custom-map-btn {
+  background-color: #2563eb !important;
+  color: #ffffff !important;
+  border: 1px solid #2563eb !important;
+  box-shadow: 0 2px 4px rgba(37, 99, 235, 0.2) !important;
+  z-index: 1000 !important;
+  position: relative !important;
+}
+
+body.dark-mode .explore-modal .custom-map-btn:hover {
+  background-color: #1d4ed8 !important;
+  border-color: #1d4ed8 !important;
+  box-shadow: 0 4px 8px rgba(37, 99, 235, 0.3) !important;
+}
+
+/* Also target any button with "Add to Map" text */
+body.dark-mode .explore-modal .leaflet-control-custom button {
+  background-color: #2563eb !important;
+  color: #ffffff !important;
+  border: 1px solid #2563eb !important;
+  box-shadow: 0 2px 4px rgba(37, 99, 235, 0.2) !important;
+  z-index: 1000 !important;
+  position: relative !important;
+}
+
+body.dark-mode .explore-modal .leaflet-control-custom button:hover {
+  background-color: #1d4ed8 !important;
+  border-color: #1d4ed8 !important;
+  box-shadow: 0 4px 8px rgba(37, 99, 235, 0.3) !important;
+}
+
+/* Ensure leaflet control container is properly positioned */
+body.dark-mode .explore-modal .leaflet-control-custom {
+  background-color: transparent !important;
+  z-index: 1000 !important;
+  position: relative !important;
+}
+/* --- Dark mode ExploreModal (model.jsx) overrides end --- */
+
+/* --- Dark mode accordion overrides start --- */
+body.dark-mode .sst-accordion-wrapper,
+body.dark-mode .accordion,
+body.dark-mode .accordion-item {
+  background-color: var(--color-surface) !important;
+  color: var(--color-text) !important;
+  border-color: var(--color-border) !important;
+}
+body.dark-mode .accordion-header {
+  background-color: var(--color-surface) !important;
+  color: var(--color-text) !important;
+}
+body.dark-mode .accordion-body {
+  background-color: var(--color-surface) !important;
+  color: var(--color-text) !important;
+}
+body.dark-mode .flex-container {
+  background-color: transparent !important;
+  color: var(--color-text) !important;
+}
+body.dark-mode .flex-container.active {
+  background-color: #35363b !important;
+  color: var(--color-accent) !important;
+}
+
+body.dark-mode .item {
+  color: var(--color-text) !important;
+}
+
+/* --- Removed Explore Modal Accordion Overrides - Using Bootstrap Defaults --- */
+/* --- Dark mode accordion overrides end --- */
+
+/* --- Dark mode sidebar accordion specific fixes start --- */
+/* Fix sidebar accordion styling in dark mode */
+body.dark-mode #sidebar-wrapper .accordion,
+body.dark-mode #sidebar-wrapper .accordion-item {
+  background-color: var(--color-surface) !important;
+  color: var(--color-text) !important;
+  border-color: var(--color-border) !important;
+}
+
+body.dark-mode #sidebar-wrapper .accordion-header {
+  background-color: var(--color-surface) !important;
+  color: var(--color-text) !important;
+}
+
+body.dark-mode #sidebar-wrapper .accordion-body {
+  background-color: var(--color-surface) !important;
+  color: var(--color-text) !important;
+}
+
+body.dark-mode #sidebar-wrapper .flex-container {
+  background-color: transparent !important;
+  color: var(--color-text) !important;
+}
+
+body.dark-mode #sidebar-wrapper .flex-container.active {
+  background-color: #35363b !important;
+  color: var(--color-accent) !important;
+}
+
+
+
+body.dark-mode #sidebar-wrapper .item {
+  color: var(--color-text) !important;
+}
+
+/* Fix nested accordion within sidebar */
+body.dark-mode #sidebar-wrapper .sst-accordion-wrapper .accordion,
+body.dark-mode #sidebar-wrapper .sst-accordion-wrapper .accordion-item {
+  background-color: var(--color-surface) !important;
+  color: var(--color-text) !important;
+  border-color: var(--color-border) !important;
+}
+
+body.dark-mode #sidebar-wrapper .sst-accordion-wrapper .accordion-header {
+  background-color: var(--color-surface) !important;
+  color: var(--color-text) !important;
+}
+
+body.dark-mode #sidebar-wrapper .sst-accordion-wrapper .accordion-body {
+  background-color: var(--color-surface) !important;
+  color: var(--color-text) !important;
+}
+
+body.dark-mode #sidebar-wrapper .sst-accordion-wrapper .flex-container {
+  background-color: transparent !important;
+  color: var(--color-text) !important;
+}
+
+body.dark-mode #sidebar-wrapper .sst-accordion-wrapper .flex-container.active {
+  background-color: #35363b !important;
+  color: var(--color-accent) !important;
+}
+
+
+
+body.dark-mode #sidebar-wrapper .sst-accordion-wrapper .item {
+  color: var(--color-text) !important;
+}
+/* --- Dark mode sidebar accordion specific fixes end --- */
+
+/* Share button on map styling */
+.share-button-map {
+  transition: all 0.2s ease-in-out;
+  
+}
+
+.share-button-map:hover {
+  transform: scale(1.05);
+  box-shadow: 0 2px 8px rgba(40, 167, 69, 0.3);
+}
+
+.share-button-map:active {
+  transform: scale(0.95);
+}
+
+/* Dark mode share button styling */
+body.dark-mode .share-button-map {
+  background: var(--color-surface, #2d3748) !important;
+  color: var(--color-text, #e2e8f0) !important;
+  border: 1px solid var(--color-border, #4a5568) !important;
+}
+
+body.dark-mode .share-button-map:hover {
+  background: var(--color-background, #4a5568) !important;
+  box-shadow: 0 2px 8px rgba(40, 167, 69, 0.4);
+}
+
+/* Sidebar buttons styling */
+.sidebar-buttons .explore-button:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 4px 8px rgba(13, 110, 253, 0.3);
+}
+.sidebar-buttons .explore-button:active {
+  transform: translateY(0);
+  box-shadow: 0 2px 4px rgba(13, 110, 253, 0.2);
+}
+
+.sidebar-buttons .more-button:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 4px 8px rgba(199, 212, 68, 0.3);
+  background-color: #b8c93a !important;
+}
+.sidebar-buttons .more-button:active {
+  transform: translateY(0);
+  box-shadow: 0 2px 4px rgba(199, 212, 68, 0.2);
+}
+
+/* Dark mode sidebar buttons styling */
+body.dark-mode .sidebar-buttons .explore-button {
+  border: 1px solid var(--color-border, #4a5568) !important;
+}
+body.dark-mode .sidebar-buttons .explore-button:hover {
+  box-shadow: 0 4px 8px rgba(13, 110, 253, 0.4);
+}
+
+body.dark-mode .sidebar-buttons .more-button {
+  border: 1px solid var(--color-border, #4a5568) !important;
+}
+body.dark-mode .sidebar-buttons .more-button:hover {
+  box-shadow: 0 4px 8px rgba(199, 212, 68, 0.4);
+  background-color: #b8c93a !important;
+}
+
+/* --- Dark mode dashboard card overrides start --- */
+body.dark-mode .card {
+  background-color: var(--color-surface) !important;
+  color: var(--color-text) !important;
+  border-color: var(--color-border) !important;
+}
+body.dark-mode .card-body {
+  background-color: var(--color-surface) !important;
+  color: var(--color-text) !important;
+}
+body.dark-mode .card-title {
+  color: var(--color-accent) !important;
+}
+body.dark-mode .card-img-top {
+  background-color: var(--color-background) !important;
+}
+body.dark-mode .btn-primary {
+  background-color: #4a6bff !important;
+  color: #fff !important;
+  border: none !important;
+}
+body.dark-mode .btn-primary:hover {
+  background-color: #3a5ae8 !important;
+}
+body.dark-mode .btn-secondary {
+  background-color: var(--color-border) !important;
+  color: var(--color-text) !important;
+  border: none !important;
+}
+/* --- Dark mode dashboard card overrides end --- */
+
+/* --- Dark mode side offcanvas overrides start --- */
+body.dark-mode .offcanvas-end {
+  background-color: var(--color-surface) !important;
+  color: var(--color-text) !important;
+}
+body.dark-mode .offcanvas-header {
+  background-color: var(--color-surface) !important;
+  color: var(--color-text) !important;
+  border-bottom: 1px solid var(--color-border) !important;
+}
+body.dark-mode .offcanvas-title {
+  color: var(--color-accent) !important;
+}
+body.dark-mode .offcanvas-body {
+  background-color: var(--color-surface) !important;
+  color: var(--color-text) !important;
+}
+body.dark-mode .offcanvas-end .btn-primary {
+  background-color: #4a6bff !important;
+  color: #fff !important;
+  border: none !important;
+}
+body.dark-mode .offcanvas-end .btn-danger {
+  background-color: #FF8C00 !important;
+  color: #fff !important;
+  border: none !important;
+}
+/* --- Dark mode side offcanvas overrides end --- */
+
+/* --- Dark mode side offcanvas-body specificity fix start --- */
+body.dark-mode .offcanvas-end .offcanvas-body,
+body.dark-mode .offcanvas .offcanvas-body {
+  background-color: var(--color-surface) !important;
+  color: var(--color-text) !important;
+}
+/* --- Dark mode side offcanvas-body specificity fix end --- */
+/* ontainer that holds the map controls */
+.leaflet-top.leaflet-right {
+  right: 20px !important;
+  left: auto !important;
+}
+
+/* Ensure the control itself doesn't override our positioning */
+.map-controls-container {
+  margin-right: 0 !important;
+  right: 0 !important;
+}
+  /* Custom right-side vertical zoom control for Leaflet - Fixed positioning */
+  .leaflet-right .leaflet-control-zoom {
+    right: 20px !important;
+    left: auto !important;
+    top: 90% !important; /* zoom share button control% */
+    transform: translateY(-50%) !important;
+    bottom: auto !important;
+    position: fixed !important;
+    z-index: 1200 !important;
+  }
+
+.leaflet-control-zoom {
+  display: flex !important;
+  flex-direction: column;
+  align-items: center;
+  background: rgba(255,255,255,0.95) !important;
+  border-radius: 16px !important;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.12);
+  padding: 0 !important;
+  border: none !important;
+  width: 40px !important;
+  height: auto !important;
+  margin: 0 !important;
+  overflow: hidden;
+}
+
+.leaflet-control-zoom-in,
+.leaflet-control-zoom-out {
+  background: #fff !important;
+  color: #223;
+  border: none !important;
+  border-radius: 0 !important;
+  width: 40px !important;
+  height: 40px !important;
+  margin: 0 !important;
+  font-size: 1.5rem !important;
+  box-shadow: none !important;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background 0.2s;
+  border-bottom: 1px solid rgba(0,0,0,0.05) !important;
+}
+
+.leaflet-control-zoom-out {
+  border-bottom: none !important;
+}
+
+/* Integrated share button at top of zoom stack */
+.leaflet-control-zoom a.leaflet-control-zoom-share {
+  background: #fff !important;
+  color: #223 !important;
+  border: none !important;
+  width: 40px !important;
+  height: 40px !important;
+  margin: 0 !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  font-size: 0 !important; /* hide any text */
+  box-shadow: none !important;
+  transition: background 0.2s;
+  border-bottom: 1px solid rgba(0,0,0,0.05) !important;
+  border-radius: 0 !important; /* interior */
+}
+.leaflet-control-zoom a.leaflet-control-zoom-share svg { width:22px; height:22px; }
+.leaflet-control-zoom a.leaflet-control-zoom-share:hover { background:#f0f0f0 !important; }
+
+/* First child (share) should keep top rounding; last child keep bottom rounding */
+.leaflet-control-zoom a:first-child { border-radius:16px 16px 0 0 !important; }
+.leaflet-control-zoom a:last-child { border-radius:0 0 16px 16px !important; }
+
+/* Dark mode variants for zoom + share control */
+body.dark-mode .leaflet-control-zoom {
+  background: var(--color-surface) !important;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.35) !important;
+}
+body.dark-mode .leaflet-control-zoom a,
+body.dark-mode .leaflet-control-zoom a.leaflet-control-zoom-share {
+  background: var(--color-surface) !important;
+  color: var(--color-text) !important;
+  border-bottom: 1px solid rgba(255,255,255,0.08) !important;
+}
+body.dark-mode .leaflet-control-zoom a:last-child { border-bottom: none !important; }
+body.dark-mode .leaflet-control-zoom a:hover,
+body.dark-mode .leaflet-control-zoom a.leaflet-control-zoom-share:hover { background: var(--color-background) !important; }
+body.dark-mode .leaflet-control-zoom a.leaflet-control-zoom-share svg { fill: currentColor; }
+
+/* Hide zoom controls and share button in mobile mode */
+@media (max-width: 1004px) {
+  .leaflet-control-zoom {
+    display: none !important;
+  }
+}
+
+/* React DatePicker calendar icon dark mode override */
+body.dark-mode .react-datepicker__calendar-icon {
+  color: #ffffff !important; /* sets icon color */
+  fill: #ffffff !important;  /* for SVG fill */
+  opacity: 0.95;
+}
+/* Ensure input keeps spacing when icon present */
+body.dark-mode .react-datepicker__view-calendar-icon input {
+  color: var(--color-text) !important;
+}
+
+/* Custom region select arrow color */
+.region-select-override {
+  appearance: none;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='20' height='20' viewBox='0 0 24 24' fill='none' stroke='%236b737d' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'><polyline points='6 9 12 15 18 9'/></svg>");
+  background-repeat: no-repeat;
+  background-position: right 12px center;
+  background-size: 18px 18px; /* normalized arrow size */
+  padding-right: 2.2rem !important; /* space for arrow */
+  height: 38px !important; /* consistent control height */
+  line-height: 1.4 !important;
+}
+/* High contrast / hover focus states */
+.region-select-override:focus {
+  outline: none;
+  box-shadow: 0 0 0 2px rgba(107,115,125,0.25);
+  border-color: #6b737d !important;
+}
+/* Dark mode arrow variant */
+body.dark-mode .region-select-override {
+  background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='20' height='20' viewBox='0 0 24 24' fill='none' stroke='%23b0b6bd' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'><polyline points='6 9 12 15 18 9'/></svg>");
+  background-size: 18px 18px !important; /* keep same size in dark mode */
+  background-color: var(--color-surface) !important;
+  color: var(--color-text) !important;
+  height: 38px !important; /* match light mode */
+}
+
+/* Explore modal header color override (apply in both modes) */
+.explore-modal .modal-header.custom-header2 {
+  background:#519ac2 !important;
+  border-bottom:1px solid #3c7693 !important;
+  color:#ffffff !important;
+}
+.explore-modal .modal-header.custom-header2 .modal-title { color:#ffffff !important; }
+.explore-modal .modal-header.custom-header2 .btn,
+.explore-modal .modal-header.custom-header2 button { color:#ffffff !important; }
+.explore-modal .modal-header.custom-header2 .btn-close { filter: invert(1) brightness(200%); opacity:.85; }
+body.dark-mode .explore-modal .modal-header.custom-header2 { background:#519ac2 !important; }
+body.dark-mode .explore-modal .modal-header.custom-header2 .btn-close { filter: invert(1) brightness(200%) !important; }
+/* Dark mode pill button fixes inside explore modal header so text remains visible */
+body.dark-mode .explore-modal .modal-header.custom-header2 .btn-light {
+  background: rgba(255,255,255,0.15) !important; /* translucent pill */
+  color:#ffffff !important; /* readable on blue */
+  border:1px solid rgba(255,255,255,0.45) !important;
+}
+body.dark-mode .explore-modal .modal-header.custom-header2 .btn-light:hover {
+  background: rgba(255,255,255,0.25) !important;
+}
+
+.leaflet-control-zoom-in:hover,
+.leaflet-control-zoom-out:hover {
+  background: #f0f0f0 !important;
+}
+
+.map-controls {
+  background: rgba(255, 255, 255, 0.1) !important; /* Semi-transparent white */
+  backdrop-filter: blur(8px); /* Frosted glass effect */
+  padding: 12px;
+  border-radius: 6px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.15);
+  color: var(--color-text) !important;
+  font-family: inherit;
+  font-size: 13px;
+  line-height: 1.5;
+  border: 1px solid rgba(255, 255, 255, 0.2); /* Semi-transparent border */
+}
+
+/* Share button positioning - Fixed to viewport */
+.share-button-control {
+  position: fixed !important;
+  right: 10px !important;
+  left: auto !important;
+  top: 82% !important;
+  z-index: 1000 !important;
+}
+
+@media (max-width: 1004px) {
+  .leaflet-right .leaflet-control-zoom {
+    right: 15px !important;
+    top: 20% !important;
+    transform: translateY(-50%) !important;
+    bottom: auto !important;
+    position: fixed !important;
+  }
+  
+  .share-button-control {
+    right: 15px !important;
+    top: calc(20% + 80px) !important;
+  }
+}
+
+/* Modal accordions use Bootstrap default styling */
+.explore-modal .accordion {
+    --bs-accordion-color: #212529;
+    --bs-accordion-bg: #fff;
+    --bs-accordion-transition: color 0.15s ease-in-out, background-color 0.15s ease-in-out, border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out, border-radius 0.15s ease;
+    --bs-accordion-border-color: var(--bs-border-color);
+    --bs-accordion-border-width: 1px;
+    --bs-accordion-border-radius: 0;
+    --bs-accordion-inner-border-radius: 0;
+    --bs-accordion-btn-padding-x: 1.25rem;
+    --bs-accordion-btn-padding-y: 1rem;
+    --bs-accordion-btn-color: #212529;
+    --bs-accordion-btn-bg: var(--bs-accordion-bg);
+    --bs-accordion-btn-icon: url(data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16' fill='%23212529'%3e%3cpath fill-rule='evenodd' d='M1.646 4.646a.5.5 0 0 1 .708 0L8 10.293l5.646-5.647a.5.5 0 0 1 .708.708l-6 6a.5.5 0 0 1-.708 0l-6-6a.5.5 0 0 1 0-.708z'/%3e%3c/svg%3e);
+    --bs-accordion-btn-icon-width: 1.25rem;
+    --bs-accordion-btn-icon-transform: rotate(-180deg);
+    --bs-accordion-btn-icon-transition: transform 0.2s ease-in-out;
+    --bs-accordion-btn-active-icon: url(data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16' fill='%230c63e4'%3e%3cpath fill-rule='evenodd' d='M1.646 4.646a.5.5 0 0 1 .708 0L8 10.293l5.646-5.647a.5.5 0 0 1 .708.708l-6 6a.5.5 0 0 1-.708 0l-6-6a.5.5 0 0 1 0-.708z'/%3e%3c/svg%3e);
+    --bs-accordion-btn-focus-border-color: #86b7fe;
+    --bs-accordion-btn-focus-box-shadow: 0 0 0 0.25rem rgba(13, 110, 253, .25);
+    --bs-accordion-body-padding-x: 1.25rem;
+    --bs-accordion-body-padding-y: 1rem;
+    --bs-accordion-active-color: #0c63e4;
+    --bs-accordion-active-bg: #e7f1ff;
+}
+
+/* Force modal accordions to use light mode styling in dark mode */
+body.dark-mode .explore-modal .accordion {
+    --bs-accordion-color: #212529 !important;
+    --bs-accordion-bg: #fff !important;
+    --bs-accordion-border-color: #dee2e6 !important;
+    --bs-accordion-btn-color: #212529 !important;
+    --bs-accordion-btn-bg: #fff !important;
+    --bs-accordion-btn-icon: url(data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16' fill='%23212529'%3e%3cpath fill-rule='evenodd' d='M1.646 4.646a.5.5 0 0 1 .708 0L8 10.293l5.646-5.647a.5.5 0 0 1 .708.708l-6 6a.5.5 0 0 1-.708 0l-6-6a.5.5 0 0 1 0-.708z'/%3e%3c/svg%3e) !important;
+    --bs-accordion-btn-active-icon: url(data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16' fill='%230c63e4'%3e%3cpath fill-rule='evenodd' d='M1.646 4.646a.5.5 0 0 1 .708 0L8 10.293l5.646-5.647a.5.5 0 0 1 .708.708l-6 6a.5.5 0 0 1-.708 0l-6-6a.5.5 0 0 1 0-.708z'/%3e%3c/svg%3e) !important;
+    --bs-accordion-active-color: #0c63e4 !important;
+    --bs-accordion-active-bg: #e7f1ff !important;
+    --bs-accordion-btn-focus-border-color: #86b7fe !important;
+    --bs-accordion-btn-focus-box-shadow: 0 0 0 0.25rem rgba(13, 110, 253, .25) !important;
+}
+
+/* Force accordion elements to use light colors in dark mode */
+body.dark-mode .explore-modal .accordion,
+body.dark-mode .explore-modal .accordion-item,
+body.dark-mode .explore-modal .accordion-header,
+body.dark-mode .explore-modal .accordion-body {
+    background-color: #fff !important;
+    color: #212529 !important;
+    border-color: #dee2e6 !important;
+}
+
+/* Force accordion button to use light styling in dark mode */
+body.dark-mode .explore-modal .accordion-button {
+    background-color: #fff !important;
+    color: #212529 !important;
+    border-color: #dee2e6 !important;
+}
+
+/* Force active accordion button to use light blue in dark mode */
+body.dark-mode .explore-modal .accordion-button:not(.collapsed) {
+    background-color: #e7f1ff !important;
+    color: #0c63e4 !important;
+}
+
+
+
+
+/* Force all accordion states to match light mode exactly */
+body.dark-mode .explore-modal .accordion-button:hover {
+    background-color: #f8f9fa !important;
+    color: #212529 !important;
+    border-color: #dee2e6 !important;
+}
+
+body.dark-mode .explore-modal .accordion-button:focus {
+    background-color: #fff !important;
+    color: #212529 !important;
+    border-color: #86b7fe !important;
+    box-shadow: 0 0 0 0.25rem rgba(13, 110, 253, .25) !important;
+}
+
+body.dark-mode .explore-modal .accordion-button:not(.collapsed):hover {
+    background-color: #e7f1ff !important;
+    color: #0c63e4 !important;
+}
+
+
+
+/* Force accordion text hover effects to match light mode */
+body.dark-mode .explore-modal .accordion a:hover,
+body.dark-mode .explore-modal .accordion .accordion-button:hover .text,
+body.dark-mode .explore-modal .accordion .accordion-button:hover span,
+body.dark-mode .explore-modal .accordion .accordion-button:hover div,
+body.dark-mode .explore-modal .accordion .clickable-text:hover {
+    color: #0c63e4 !important;
+    /* text-decoration: underline !important; */
+}
+
+/* Force accordion item content hover effects */
+body.dark-mode .explore-modal .accordion .accordion-body a:hover,
+body.dark-mode .explore-modal .accordion .accordion-body .item:hover,
+body.dark-mode .explore-modal .accordion .accordion-body .clickable:hover {
+    color: #0c63e4 !important;
+    background-color: #f8f9fa !important;
+}
+
+/* Force flex-container hover effects to match light mode */
+body.dark-mode .explore-modal .accordion .flex-container:hover {
+    background-color: #f8f9fa !important;
+    color: #212529 !important;
+    cursor: pointer !important;
+}
+
+body.dark-mode .explore-modal .accordion .flex-container:hover .item {
+    color: #0c63e4 !important;
+}
+
+/* Force accordion collapse transition states */
+body.dark-mode .explore-modal .accordion-collapse {
+    background-color: #fff !important;
+    border-color: #dee2e6 !important;
+}
+
+/* Ensure accordion items have proper spacing and borders - SHARP CORNERS */
+body.dark-mode .explore-modal .accordion-item:first-child {
+    border-top-left-radius: 0 !important;
+    border-top-right-radius: 0 !important;
+}
+
+body.dark-mode .explore-modal .accordion-item:last-child {
+    border-bottom-left-radius: 0 !important;
+    border-bottom-right-radius: 0 !important;
+}
+
+body.dark-mode .explore-modal .accordion-item:not(:first-child) {
+    border-top: 0 !important;
+}
+
+/* Additional comprehensive overrides to ensure 100% light mode consistency */
+
+/* Force all text and elements to use light mode colors */
+body.dark-mode .explore-modal .accordion * {
+    border-color: #dee2e6 !important;
+}
+
+/* Override any potential dark mode text overrides */
+body.dark-mode .explore-modal .accordion span,
+body.dark-mode .explore-modal .accordion div:not(.accordion-button),
+body.dark-mode .explore-modal .accordion p,
+body.dark-mode .explore-modal .accordion h1,
+body.dark-mode .explore-modal .accordion h2,
+body.dark-mode .explore-modal .accordion h3,
+body.dark-mode .explore-modal .accordion h4,
+body.dark-mode .explore-modal .accordion h5,
+body.dark-mode .explore-modal .accordion h6 {
+    color: #212529 !important;
+    background-color: transparent !important;
+}
+
+/* Force accordion button text specifically */
+body.dark-mode .explore-modal .accordion-button span,
+body.dark-mode .explore-modal .accordion-button div,
+body.dark-mode .explore-modal .accordion-button .text {
+    color: #212529 !important;
+}
+
+/* Force active accordion button text */
+body.dark-mode .explore-modal .accordion-button:not(.collapsed) span,
+body.dark-mode .explore-modal .accordion-button:not(.collapsed) div,
+body.dark-mode .explore-modal .accordion-button:not(.collapsed) .text {
+    color: #0c63e4 !important;
+}
+
+/* Force container backgrounds */
+body.dark-mode .explore-modal .scrollable-column {
+    background-color: #fff !important;
+}
+
+/* Remove any top spacing from small map in explore modal */
+.explore-modal .small-map-outer,
+.explore-modal .small-map-container {
+    margin-top: 0 !important;
+    padding-top: 0 !important;
+}
+
+/* Remove spacing from accordion metadata container */
+.explore-modal .scrollable-column > div:first-child {
+    margin-top: 0 !important;
+    padding-top: 0 !important;
+}
+
+/* Force all transitions and animations to use light mode values */
+body.dark-mode .explore-modal .accordion,
+body.dark-mode .explore-modal .accordion * {
+    transition: color 0.15s ease-in-out, background-color 0.15s ease-in-out, border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out, border-radius 0.15s ease !important;
+}
+
+/* Remove any box shadows that might interfere */
+body.dark-mode .explore-modal .accordion,
+body.dark-mode .explore-modal .accordion-item,
+body.dark-mode .explore-modal .accordion-button:not(:focus) {
+    box-shadow: none !important;
+}
+
+/* Login Modal Header - Force white text in both light and dark mode */
+.custom-modal .modal-header .modal-title {
+    color: white !important;
+}
+
+/* Login Modal Input Fields - Make them clearly visible */
+.custom-modal .form-control {
+    background-color: #ffffff !important;
+    border: 2px solid #dee2e6 !important;
+    color: #1e293b !important;
+    border-radius: 6px !important;
+}
+
+.custom-modal .form-control:focus {
+    background-color: #ffffff !important;
+    border: 2px solid #2563eb !important;
+    color: #1e293b !important;
+    box-shadow: 0 0 0 0.2rem rgba(37, 99, 235, 0.25) !important;
+    outline: none !important;
+}
+
+.custom-modal .form-control::placeholder {
+    color: #9ca3af !important;
+    opacity: 1 !important;
+}
+
+/* Dashboard search bar border fixes */
+body.dark-mode #dashboard-search-group .input-group-text {
+    border-left: none !important;
+}
+
+body.dark-mode #dashboard-search-group .form-control {
+    border-left: none !important;
+}
+
+/* Modal background color overrides for dark mode */
+body.dark-mode .explore-modal .modal-body {
+  background-color: #ffffff !important;
+}
+
+body.dark-mode .explore-modal .scrollable-column:first-child {
+  background-color: #f8f8f8 !important;
+  border-radius: 0 !important;
+}
+
+body.dark-mode .explore-modal .scrollable-column:last-child {
+  background-color: #ffffff !important;
+  border-radius: 0 !important;
+}
+
+/* Ensure modal accordion styling is consistent in dark mode */
+body.dark-mode .explore-modal .accordion,
+body.dark-mode .explore-modal .accordion-item,
+body.dark-mode .explore-modal .accordion-header,
+body.dark-mode .explore-modal .accordion-button,
+body.dark-mode .explore-modal .accordion-body {
+  border-radius: 0 !important;
+}
+
+/* Force the left panel background in dark mode */
+body.dark-mode .explore-modal .modal-body .row .col-md-4 {
+  background-color: #f8f8f8 !important;
+  border-radius: 0 !important;
+}
+
+/* Force the right panel background in dark mode */
+body.dark-mode .explore-modal .modal-body .row .col-md-8 {
+  background-color: #ffffff !important;
+  border-radius: 0 !important;
+}
+
+/* Force all nested accordion elements to have sharp corners in dark mode */
+body.dark-mode .nested-accordion .accordion,
+body.dark-mode .nested-accordion .accordion-item,
+body.dark-mode .nested-accordion .accordion-header,
+body.dark-mode .nested-accordion .accordion-button,
+body.dark-mode .nested-accordion .accordion-body,
+body.dark-mode .sst-accordion-wrapper .accordion,
+body.dark-mode .sst-accordion-wrapper .accordion-item,
+body.dark-mode .sst-accordion-wrapper .accordion-header,
+body.dark-mode .sst-accordion-wrapper .accordion-button,
+body.dark-mode .sst-accordion-wrapper .accordion-body {
+  border-radius: 0 !important;
+  border-top-left-radius: 0 !important;
+  border-top-right-radius: 0 !important;
+  border-bottom-left-radius: 0 !important;
+  border-bottom-right-radius: 0 !important;
+  --bs-accordion-border-radius: 0 !important;
+  --bs-accordion-inner-border-radius: 0 !important;
+}
+
+/* Force all accordion items to have sharp corners regardless of position */
+body.dark-mode .explore-modal .accordion-item,
+body.dark-mode .explore-modal .accordion-item:first-child,
+body.dark-mode .explore-modal .accordion-item:last-child,
+body.dark-mode .nested-accordion .accordion-item,
+body.dark-mode .nested-accordion .accordion-item:first-child,
+body.dark-mode .nested-accordion .accordion-item:last-child,
+body.dark-mode .sst-accordion-wrapper .accordion-item,
+body.dark-mode .sst-accordion-wrapper .accordion-item:first-child,
+body.dark-mode .sst-accordion-wrapper .accordion-item:last-child {
+  border-radius: 0 !important;
+  border-top-left-radius: 0 !important;
+  border-top-right-radius: 0 !important;
+  border-bottom-left-radius: 0 !important;
+  border-bottom-right-radius: 0 !important;
+}
+
+/* Accordion metadata specific styling for sharp corners */
+.accordion-metadata .accordion,
+.accordion-metadata .accordion-item,
+.accordion-metadata .accordion-header,
+.accordion-metadata .accordion-button,
+.accordion-metadata .accordion-body {
+  border-radius: 0 !important;
+  border-top-left-radius: 0 !important;
+  border-top-right-radius: 0 !important;
+  border-bottom-left-radius: 0 !important;
+  border-bottom-right-radius: 0 !important;
+}
+
+/* Dark mode accordion metadata styling */
+body.dark-mode .accordion-metadata .accordion,
+body.dark-mode .accordion-metadata .accordion-item,
+body.dark-mode .accordion-metadata .accordion-header,
+body.dark-mode .accordion-metadata .accordion-button,
+body.dark-mode .accordion-metadata .accordion-body {
+  border-radius: 0 !important;
+  border-top-left-radius: 0 !important;
+  border-top-right-radius: 0 !important;
+  border-bottom-left-radius: 0 !important;
+  border-bottom-right-radius: 0 !important;
+}
+
+/* Force sharp corners on all accordion elements in the modal */
+.explore-modal .accordion,
+.explore-modal .accordion-item,
+.explore-modal .accordion-header,
+.explore-modal .accordion-button,
+.explore-modal .accordion-body {
+  border-radius: 0 !important;
+  border-top-left-radius: 0 !important;
+  border-top-right-radius: 0 !important;
+  border-bottom-left-radius: 0 !important;
+  border-bottom-right-radius: 0 !important;
+}
+
+/* Dark mode modal accordion sharp corners */
+body.dark-mode .explore-modal .accordion,
+body.dark-mode .explore-modal .accordion-item,
+body.dark-mode .explore-modal .accordion-header,
+body.dark-mode .explore-modal .accordion-button,
+body.dark-mode .explore-modal .accordion-body {
+  border-radius: 0 !important;
+  border-top-left-radius: 0 !important;
+  border-top-right-radius: 0 !important;
+  border-bottom-left-radius: 0 !important;
+  border-bottom-right-radius: 0 !important;
+}
+
+/* Nested accordion specific styling for sharp corners in dark mode */
+body.dark-mode .sst-accordion-wrapper .accordion,
+body.dark-mode .sst-accordion-wrapper .accordion-item,
+body.dark-mode .sst-accordion-wrapper .accordion-header,
+body.dark-mode .sst-accordion-wrapper .accordion-button,
+body.dark-mode .sst-accordion-wrapper .accordion-body {
+  border-radius: 0 !important;
+  border-top-left-radius: 0 !important;
+  border-top-right-radius: 0 !important;
+  border-bottom-left-radius: 0 !important;
+  border-bottom-right-radius: 0 !important;
+}
+
+/* Flex container sharp corners in dark mode */
+body.dark-mode .flex-container {
+  border-radius: 0 !important;
+  border-top-left-radius: 0 !important;
+  border-top-right-radius: 0 !important;
+  border-bottom-left-radius: 0 !important;
+  border-bottom-right-radius: 0 !important;
+}
+
+/* Force all accordion elements in nested accordion to have sharp corners in dark mode */
+body.dark-mode .nested-accordion .accordion,
+body.dark-mode .nested-accordion .accordion-item,
+body.dark-mode .nested-accordion .accordion-header,
+body.dark-mode .nested-accordion .accordion-button,
+body.dark-mode .nested-accordion .accordion-body,
+body.dark-mode .nested-accordion .flex-container {
+  border-radius: 0 !important;
+  border-top-left-radius: 0 !important;
+  border-top-right-radius: 0 !important;
+  border-bottom-left-radius: 0 !important;
+  border-bottom-right-radius: 0 !important;
+}
+
+/* Additional specificity for nested accordion elements */
+body.dark-mode .scrollable-column .accordion,
+body.dark-mode .scrollable-column .accordion-item,
+body.dark-mode .scrollable-column .accordion-header,
+body.dark-mode .scrollable-column .accordion-button,
+body.dark-mode .scrollable-column .accordion-body,
+body.dark-mode .scrollable-column .flex-container {
+  border-radius: 0 !important;
+  border-top-left-radius: 0 !important;
+  border-top-right-radius: 0 !important;
+  border-bottom-left-radius: 0 !important;
+  border-bottom-right-radius: 0 !important;
+}
+

@@ -1,0 +1,168 @@
+
+  .custom-modal .modal-content {
+    border-radius: 0; /* Removes the rounded corners */
+  }
+  
+
+  .custom-header2 {
+    color: white;
+  }
+  .custom-modal .modal-header,
+  .custom-modal .modal-body,
+  .custom-modal .modal-footer {
+    border-radius: 0 !important; /* Ensures the header, body, and footer have sharp edges */
+  }
+  
+  .fixed-column {
+    background-color: #f8f9fa !important; /* Optional: for better visibility */
+    border-right: 1px solid #dee2e6 !important; /* Optional: for better visibility */
+    height: 550px !important; /* Full height of viewport */
+    position: sticky !important;
+    top: 0 !important; /* Sticks to the top */
+    overflow: hidden !important; /* Prevents overflow in the fixed column */
+}
+
+.scrollable-column {
+    height: 550px !important; /* Full height of viewport */
+    overflow-y: auto !important; /* Allows vertical scrolling */
+}
+
+.scrollable-content {
+    padding: 15px !important; /* Optional: for padding inside the scrollable area */
+    /* Add additional styling as needed */
+}
+
+
+/* Make the modal header and footer thinner */
+.modal-header, .modal-footer {
+  padding: 0.5rem !important; /* Adjust the padding to make the header/footer thinner */
+}
+
+/* Optional: Adjust font size for better fit */
+.modal-header .modal-title, .modal-footer .modal-footer-content {
+  font-size: 0.875rem !important; /* Adjust the font size if necessary */
+}
+
+/* Optional: Customize modal header/footer borders */
+.modal-header {
+  border-bottom: 1px solid #ddd !important; /* Light border for the header */
+}
+
+.modal-footer {
+  border-top: 1px solid #ddd !important; /* Light border for the footer */
+}
+
+.modal-header .btn-close {
+  margin-right: 0 !important; /* Remove default margin */
+  padding-right: 2 !important; /* Remove default padding */
+  /* You can add more styles here if needed */
+}
+
+.modal-header, .modal-footer {
+  padding: 0.5rem !important;
+}
+
+/* Custom scrollbar styling for modal - Light Theme */
+.custom-modal .scrollable-column::-webkit-scrollbar {
+  width: 10px;
+}
+
+.custom-modal .scrollable-column::-webkit-scrollbar-track {
+  background: #f5f5f5;
+  border-radius: 6px;
+  margin: 2px;
+}
+
+.custom-modal .scrollable-column::-webkit-scrollbar-thumb {
+  background: #d1d5db;
+  border-radius: 6px;
+  border: 2px solid #f5f5f5;
+}
+
+.custom-modal .scrollable-column::-webkit-scrollbar-thumb:hover {
+  background: #9ca3af;
+}
+
+.custom-modal .scrollable-column::-webkit-scrollbar-thumb:active {
+  background: #6b7280;
+}
+
+/* Firefox scrollbar styling - Light Theme */
+.custom-modal .scrollable-column {
+  scrollbar-width: thin;
+  scrollbar-color: #d1d5db #f5f5f5;
+}
+
+/* General modal scrollbar styling - Light Theme */
+.custom-modal ::-webkit-scrollbar {
+  width: 10px;
+}
+
+.custom-modal ::-webkit-scrollbar-track {
+  background: #f5f5f5;
+  border-radius: 6px;
+  margin: 2px;
+}
+
+.custom-modal ::-webkit-scrollbar-thumb {
+  background: #d1d5db;
+  border-radius: 6px;
+  border: 2px solid #f5f5f5;
+}
+
+.custom-modal ::-webkit-scrollbar-thumb:hover {
+  background: #9ca3af;
+}
+
+.custom-modal ::-webkit-scrollbar-thumb:active {
+  background: #6b7280;
+}
+
+/* Firefox general scrollbar styling - Light Theme */
+.custom-modal {
+  scrollbar-width: thin;
+  scrollbar-color: #d1d5db #f5f5f5;
+}
+
+/* Dark Theme Scrollbar Overrides - Same as light mode */
+body.dark-mode .custom-modal .scrollable-column::-webkit-scrollbar-track {
+  background: #f5f5f5;
+}
+
+body.dark-mode .custom-modal .scrollable-column::-webkit-scrollbar-thumb {
+  background: #d1d5db;
+  border: 2px solid #f5f5f5;
+}
+
+body.dark-mode .custom-modal .scrollable-column::-webkit-scrollbar-thumb:hover {
+  background: #9ca3af;
+}
+
+body.dark-mode .custom-modal .scrollable-column::-webkit-scrollbar-thumb:active {
+  background: #6b7280;
+}
+
+body.dark-mode .custom-modal .scrollable-column {
+  scrollbar-color: #d1d5db #f5f5f5;
+}
+
+body.dark-mode .custom-modal ::-webkit-scrollbar-track {
+  background: #f5f5f5;
+}
+
+body.dark-mode .custom-modal ::-webkit-scrollbar-thumb {
+  background: #d1d5db;
+  border: 2px solid #f5f5f5;
+}
+
+body.dark-mode .custom-modal ::-webkit-scrollbar-thumb:hover {
+  background: #9ca3af;
+}
+
+body.dark-mode .custom-modal ::-webkit-scrollbar-thumb:active {
+  background: #6b7280;
+}
+
+body.dark-mode .custom-modal {
+  scrollbar-color: #d1d5db #f5f5f5;
+}

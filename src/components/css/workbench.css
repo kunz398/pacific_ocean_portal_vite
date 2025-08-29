@@ -1,0 +1,157 @@
+/* Base styles */
+.button-row {
+    display: flex;
+    justify-content: center;
+    gap: 1px;
+    padding: 0;
+    margin: 0;
+}
+
+.custom-dropdown-button {
+    font-size: 12px;
+    border-radius: 0;
+    color: white;
+}
+
+.custom-dropdown-button:hover {
+    color: #ffffff;
+}
+
+.form-check-input:checked, 
+input[type="checkbox"]:checked {
+    background-color: #0d6efd !important;
+    border-color: #0d6efd !important;
+}
+
+.form-check-input:checked:after, 
+input[type="checkbox"]:checked:after {
+    color: #fff !important;
+}
+
+/* Dark mode styles */
+body.dark-mode .workbench-container {
+    color: #e0e0e0;
+}
+
+body.dark-mode .accordion-button {
+    background-color: #2d2d2d;
+    color: #e0e0e0;
+}
+
+body.dark-mode .accordion-button:not(.collapsed) {
+    background-color: #3d3d3d;
+    color: #ffffff;
+}
+
+body.dark-mode .card {
+    background-color: #2d2d2d;
+    border-color: #444;
+}
+
+body.dark-mode .card-header {
+    background-color: #2d2d2d;
+    border-bottom: 1px solid #444;
+}
+
+body.dark-mode .accordion-body {
+    background-color: #252525;
+}
+
+body.dark-mode .form-control,
+body.dark-mode .form-select {
+    background-color: #3d3d3d;
+    color: #e0e0e0;
+    border-color: #555;
+}
+
+body.dark-mode .form-control:focus,
+body.dark-mode .form-select:focus {
+    background-color: #4d4d4d;
+    color: #ffffff;
+    border-color: #0d6efd;
+    box-shadow: 0 0 0 0.25rem rgba(13, 110, 253, 0.25);
+}
+
+body.dark-mode .form-label,
+body.dark-mode .form-text {
+    color: #e0e0e0;
+}
+
+/* Specific component dark mode styles */
+body.dark-mode .sofar-type-label {
+    color: #f1f1f1;
+}
+
+body.dark-mode .sofar-type-label.disabled {
+    color: #888;
+}
+
+body.dark-mode .sofar-type-label-disabled {
+    color: #aaa;
+}
+
+/* Make sure all text is visible in dark mode */
+body.dark-mode {
+    color: #e0e0e0;
+}
+
+/* Remove All button styles */
+.remove-all-button {
+    padding-right: 5px;
+    font-size: 12px;
+    background: none;
+    border: none;
+    color: #3b3b3b;
+    cursor: pointer;
+    margin-top: -25px;
+    display: flex;
+    align-items: center;
+    transition: color 0.2s ease-in-out;
+}
+
+.remove-all-button:hover {
+    color: #0d6efd;
+}
+
+.remove-all-button .icon {
+    margin-top: -2px;
+    margin-right: 2px;
+}
+
+/* Dark mode styles for Remove All button */
+body.dark-mode .remove-all-button {
+    color: #e0e0e0;
+}
+
+body.dark-mode .remove-all-button:hover {
+    color: #4da6ff;
+}
+
+/* Workbench empty state text styles */
+.workbench-hints-text {
+    color: #555;
+}
+
+.workbench-hints-title {
+    color: #333;
+}
+
+/* Dark mode text styles for workbench hints */
+body.dark-mode .workbench-hints-text {
+    color: white !important;
+}
+
+body.dark-mode .workbench-hints-title {
+    color: white !important;
+}
+
+/* Override Bootstrap text-light for light mode */
+body:not(.dark-mode) .text-light {
+    color: #555 !important;
+}
+
+body:not(.dark-mode) .workbench-hints-title {
+    color: #333 !important;
+}
+
+

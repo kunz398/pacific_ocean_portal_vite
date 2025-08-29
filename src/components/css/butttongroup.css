@@ -1,0 +1,4 @@
+/* Hide the default Bootstrap dropdown caret */
+.no-caret::after {
+  display: none !important;
+}

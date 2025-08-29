@@ -1,0 +1,51 @@
+.card {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  border: none;
+  background-color: #fff;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Optional: for better card look */
+}
+
+.card-img-container {
+  height: 180px; /* You can adjust this height as needed */
+  overflow: hidden;
+}
+
+.card-img-top {
+  width: 100%;
+  height: 100%;
+  object-fit: cover; /* Ensures the image covers the space of the container */
+}
+
+.card-body {
+  padding: 15px;
+  flex-grow: 1; /* Makes sure the body takes up the remaining space */
+}
+
+.card-title {
+  font-size: 15px;
+  font-weight: 600;
+}
+
+.card-subtitle {
+  font-size: 14px;
+  color: #6c757d;
+}
+
+.card-text {
+  font-size: 0.875rem;
+ 
+}
+
+/* customStyles.css */
+.modal-header .close {
+color: #fff;  /* Change the close button icon color to white */
+opacity: 1;    /* Ensure the icon is fully visible */
+}
+
+.modal-header .close:hover {
+color: #ccc;  /* Optional: Change the color when hovering (lighter shade) */
+}
+
+

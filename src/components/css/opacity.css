@@ -1,0 +1,83 @@
+/* Base track style (background) */
+input[type="range"].custom-range-slider {
+  -webkit-appearance: none;
+  width: 100%;
+  height: 6px; /* Track height */
+  background: #e9ecef; /* Light gray unfilled track */
+  border-radius: 3px;
+  outline: none;
+}
+
+/* WebKit (Chrome, Safari) - Thumb (the draggable part) */
+input[type="range"].custom-range-slider::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  width: 8px; /* Rectangle width */
+  height: 20px; /* Rectangle height */
+  background: orange; /* #007bff color */
+  border-radius: 0; /* Makes it rectangular */
+  border: 2px solid white; /* Optional: adds a white border */
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2); /* Optional: adds a slight shadow */
+  cursor: pointer;
+  margin-top: -6px; /* Centers vertically */
+}
+
+/* Filled portion of the track (before the thumb) */
+input[type="range"].custom-range-slider::-webkit-slider-runnable-track {
+  background: linear-gradient(
+    to right,
+    orange 0%,
+    orange calc(var(--value) * 100%),
+    #e9ecef calc(var(--value) * 100%),
+    #e9ecef 100%
+  );
+}
+
+/* Firefox - Track */
+input[type="range"].custom-range-slider::-moz-range-track {
+  height: 6px;
+  background: #e9ecef;
+  border-radius: 3px;
+}
+
+/* Firefox - Thumb */
+input[type="range"].custom-range-slider::-moz-range-thumb {
+  width: 5px;
+  height: 16px;
+  background: orange;
+  border-radius: 0;
+  border: 2px solid white;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+  cursor: pointer;
+}
+
+/* Firefox filled track */
+input[type="range"].custom-range-slider::-moz-range-progress {
+  background: orange;
+  height: 6px;
+  border-radius: 3px;
+}
+
+/* Edge/IE - Track */
+input[type="range"].custom-range-slider::-ms-track {
+  height: 6px;
+  background: #e9ecef;
+  border-radius: 3px;
+  color: transparent; /* Hides the default tick marks */
+}
+
+/* Edge/IE - Thumb */
+input[type="range"].custom-range-slider::-ms-thumb {
+  width: 5px;
+  height: 16px;
+  background: orange;
+  border-radius: 0;
+  border: 2px solid white;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+  cursor: pointer;
+}
+
+/* Edge/IE - Progress (filled portion) */
+input[type="range"].custom-range-slider::-ms-fill-lower {
+  background: orange;
+  border-radius: 3px;
+}

@@ -1,0 +1,89 @@
+  .content-container {
+    height: calc(100vh - 56px); /* Adjust the height of the content area based on Navbar height */
+    display: flex;
+  }
+  
+  .h-100 {
+    height: 100%;
+  }
+  
+.col-2-5 {
+    overflow-y: auto; /* Enable vertical scrolling */
+    overflow-x: hidden; /* Disable horizontal scrolling */
+    height: calc(100vh - 56px); 
+  }
+  
+  .col-9-5 {
+    flex: 9.2; /* 9.5 parts of the available space */
+  }
+
+/* Custom Tabs Styling for Light/Dark Mode */
+.custom-tabs, .nav-tabs {
+  background: var(--color-surface, #fff);
+  border-bottom: 2px solid var(--color-secondary, #e5e7eb);
+  padding-left: 12px;
+  padding-top: 8px;
+}
+body.dark-mode .custom-tabs, body.dark-mode .nav-tabs {
+  background: var(--color-surface, #23272b) !important;
+  border-bottom: 2px solid #333 !important;
+}
+
+.custom-tabs .nav-link, .nav-tabs .nav-link {
+  color: var(--color-text, #181c20);
+  background: transparent;
+  border: none;
+  border-radius: 8px 8px 0 0;
+  margin-right: 6px;
+  padding: 8px 18px 6px 18px;
+  font-weight: 500;
+  transition: background 0.18s, color 0.18s;
+}
+body.dark-mode .custom-tabs .nav-link, body.dark-mode .nav-tabs .nav-link {
+  color: #e5e7eb !important;
+}
+
+.custom-tabs .nav-link.active, .nav-tabs .nav-link.active {
+  background: #e5e7eb;
+  color: #181c20 !important;
+  border: none;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+}
+body.dark-mode .custom-tabs .nav-link.active, body.dark-mode .nav-tabs .nav-link.active {
+  background: #23272b !important;
+  color: #fff !important;
+}
+
+.custom-tabs .nav-link:hover, .nav-tabs .nav-link:hover {
+  background: #f3f4f6;
+  color: #181c20;
+}
+body.dark-mode .custom-tabs .nav-link:hover, body.dark-mode .nav-tabs .nav-link:hover {
+  background: #333 !important;
+  color: #fff !important;
+}
+
+/* Transparent navbar with blur */
+.navbar-transparent {
+  background: rgba(255,255,255,0.1); /* fallback for light mode */
+  backdrop-filter: blur(8px);
+  box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+  transition: background 0.3s;
+}
+body.dark-mode .navbar-transparent {
+  background: rgba(30, 30, 30, 0.3); /* fallback for dark mode */
+  color: #fff;
+}
+
+/* Transparent sidebar with blur */
+.sidebar-transparent {
+  background: rgba(255,255,255,0.1); /* fallback for light mode */
+  backdrop-filter: blur(8px);
+  transition: background 0.3s;
+}
+body.dark-mode .sidebar-transparent {
+  background: rgba(30, 30, 30, 0.3); /* fallback for dark mode */
+  color: #fff;
+}
+
+
