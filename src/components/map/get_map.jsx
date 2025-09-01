@@ -1,14 +1,14 @@
-"use client" // client side rendering 
+
 import React, { useEffect, useState, useRef } from 'react';
 import 'leaflet/dist/leaflet.css';
 import L from 'leaflet';
-import { useAppSelector, useAppDispatch } from '@/app/GlobalRedux/hooks'
-import '@/components/functions/L.TileLayer.BetterWMS';
-import { setCenter, setZoom, setBaseMapLayer,setEEZEnable,setCoastlineEnable,setCityNameEnable, setBounds, setDataLimit } from '@/app/GlobalRedux/Features/map/mapSlice';
+import { useAppSelector, useAppDispatch } from '../../GlobalRedux/hooks'
+import '../../components/functions/L.TileLayer.BetterWMS';
+import { setCenter, setZoom, setBaseMapLayer,setEEZEnable,setCoastlineEnable,setCityNameEnable, setBounds, setDataLimit } from '../../GlobalRedux/Features/map/mapSlice';
 import addWMSTileLayer from '../functions/addWMSTileLayer';
-import '@/components/css/legend.css';
-import { get_url } from '@/components/json/urls';
-import { showoffCanvas, hideoffCanvas  } from '@/app/GlobalRedux/Features/offcanvas/offcanvasSlice';
+import '../../components/css/legend.css';
+import { get_url } from '../../components/json/urls';
+import { showoffCanvas, hideoffCanvas  } from '../../GlobalRedux/Features/offcanvas/offcanvasSlice.jsx';
 import { FaShare } from "react-icons/fa";
 import ShareWorkbench from '../tools/shareWorkbench';
 import { addCOGTileLayer } from '../functions/addCogTileLayer';
@@ -16,14 +16,11 @@ import { addCOGTileLayer } from '../functions/addCogTileLayer';
 import 'leaflet.markercluster/dist/MarkerCluster.css';
 import 'leaflet.markercluster/dist/MarkerCluster.Default.css';
 
-// Dynamically import markercluster to avoid SSR issues
-let markerClusterGroup;
-if (typeof window !== 'undefined') {
-  require('leaflet.markercluster');
-  markerClusterGroup = window.L.markerClusterGroup;
-}
-import Loading from '@/app/loading';
-import { setCoordinates  } from '@/app/GlobalRedux/Features/coordinate/mapSlice';
+// Import markercluster directly for Vite
+import 'leaflet.markercluster';
+
+import Loading from '../../loading';
+import { setCoordinates  } from '../../GlobalRedux/Features/coordinate/mapSlice';
 
 // Add custom tile layer for Firefox CORS handling
 const createFirefoxCompatibleTileLayer = (url, options = {}) => {
@@ -150,7 +147,7 @@ const MapBox = () => {
       if (!b) return;
       scheduleMapOp(() => {
         if (!mapRef.current) return;
-        mapRef.current.fitBounds(b, { animate: false, ...options, animate: false });
+        mapRef.current.fitBounds(b, { animate: false, ...options });
       });
     };
     
@@ -2247,7 +2244,7 @@ const MapBox = () => {
       {(isLoading || isLoading2) && <Loading />}
       <div id="map" style={{Zindex: "auto",marginRight:-12, marginLeft:-12}}></div>
       
-      Data Checking Loading Alert
+
       {/* COMMENTED OUT - Data Checking Loading Alert */}
       {/* {isCheckingData && (
         <div

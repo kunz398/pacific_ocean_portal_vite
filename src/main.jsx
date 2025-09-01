@@ -10,7 +10,13 @@ import GoogleAnalytics from "./components/tools/googleAnalytics";
 import App from './App';
 import Navigationbar from "./components/navbar/Navbar";
 
-import { BrowserRouter } from "react-router-dom";
+import { BrowserRouter, Routes, Route } from "react-router-dom";
+
+// Import pages for routing
+import Aboutus from './pages/aboutus';
+import Collections from './pages/collection';
+import Library from './pages/library';
+import Login from './components/auth/Login';
 
 // Import all CSS (unchanged)
 import './components/css/mapmain.css';
@@ -38,7 +44,15 @@ function Root() {
       <StoreProviderWrapper>
         <BrowserRouter>
           <Navigationbar>
-            <App />
+            <Routes>
+              <Route path="/" element={<App />} />
+              <Route path="/aboutus" element={<Aboutus />} />
+              <Route path="/collection" element={<Collections />} />
+              <Route path="/collections" element={<Collections />} />
+              <Route path="/library" element={<Library />} />
+              <Route path="/login" element={<Login />} />
+              {/* Add more routes as needed */}
+            </Routes>
           </Navigationbar>
         </BrowserRouter>
       </StoreProviderWrapper>

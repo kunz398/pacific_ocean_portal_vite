@@ -1,13 +1,12 @@
-"use client" // client side rendering 
 import React, { useEffect, useState, useRef } from 'react';
 import 'leaflet/dist/leaflet.css';
 import L from 'leaflet';
 import '@/components/css/map.css'
-import { useAppSelector, useAppDispatch, useAppStore } from '@/app/GlobalRedux/hooks'
-import { hideModal } from '@/app/GlobalRedux/Features/modal/modalSlice';
-import { setCenter, setZoom, setBounds,addMapLayer, removeMapLayer } from '@/app/GlobalRedux/Features/map/mapSlice';
+import { useAppSelector, useAppDispatch, useAppStore } from '@/GlobalRedux/hooks'
+import { hideModal } from '@/GlobalRedux/Features/modal/modalSlice';
+import { setCenter, setZoom, setBounds,addMapLayer, removeMapLayer } from '@/GlobalRedux/Features/map/mapSlice';
 import { get_url } from '@/components/json/urls';
-import Loading from '@/app/loading';
+import Loading from '@/loading';
 import './small_map.css';
 
 const SmallMap = ({currentDataset}) => {

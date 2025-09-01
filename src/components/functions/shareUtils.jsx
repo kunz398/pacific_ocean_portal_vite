@@ -80,10 +80,10 @@ const decompressWorkbenchState = (compressedState) => {
 export const restoreWorkbenchState = async (workbenchState, dispatch) => {
   try {
     // Import all required actions
-    const mapSlice = await import('@/app/GlobalRedux/Features/map/mapSlice');
-  const offcanvasSlice = await import('@/app/GlobalRedux/Features/offcanvas/offcanvasSlice');
-    const countrySlice = await import('@/app/GlobalRedux/Features/country/countrySlice');
-    const coordinateSlice = await import('@/app/GlobalRedux/Features/coordinate/mapSlice');
+    const mapSlice = await import('@/GlobalRedux/Features/map/mapSlice');
+  const offcanvasSlice = await import('@/GlobalRedux/Features/offcanvas/offcanvasSlice');
+    const countrySlice = await import('@/GlobalRedux/Features/country/countrySlice');
+    const coordinateSlice = await import('@/GlobalRedux/Features/coordinate/mapSlice');
 
     // Clear existing layers first
     dispatch(mapSlice.removeAllMapLayer());
