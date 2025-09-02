@@ -351,10 +351,33 @@ function TimeseriesSofar({ height }) {
     // console.log("START LABEL AND VALUE>>>>>>>>>>>>>>>");
 
     // console.log("<<<<<<<<<<< LABEL AND VALUE END");
+    const indices = times.map((t, i) => i);
+  indices.sort((a, b) => {
+    // Parse custom format "DD-MM-YYTHH:MM" as UTC
+    const parseCustom = (str) => {
+      const [datePart, timePart] = str.split('T');
+      const [day, month, year] = datePart.split('-');
+      const [hour, minute] = timePart.split(':');
+      return Date.UTC(
+        parseInt('20' + year), // assumes YY is 25, so 2025
+        parseInt(month) - 1,
+        parseInt(day),
+        parseInt(hour),
+        parseInt(minute)
+      );
+    };
+    return parseCustom(times[a]) - parseCustom(times[b]);
+  });
+
+  const sortedTimes = indices.map(i => times[i]);
+  const sortedDatasets = datasets.map(ds => ({
+    ...ds,
+    values: indices.map(i => ds.values[i])
+  }));
     
     setChartData({
-      labels: times,
-      datasets: datasets.map((dataset, index) => {
+      labels: sortedTimes,
+      datasets: sortedDatasets.map((dataset, index) => {
         // console.log(dataset)
         // Filter out -999 values by replacing them with null to create gaps
         const filteredValues = dataset.values.map(value => {

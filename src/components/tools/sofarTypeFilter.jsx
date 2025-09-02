@@ -22,14 +22,29 @@ const SofarTypeFilter = ({ item }) => {
           throw new Error('Failed to fetch types');
         }
         const data = await response.json();
-        setTypes(data);
+        var selected_Data;
+        if ( item.layer_information.is_composite){
+          const idString = item.layer_information.composite_layer_id; 
+          selected_Data = data.filter(item => String(item.id) === idString);
+        }
+        else{
+          selected_Data = data;
+        }
+        setTypes(selected_Data);
         
         // if none then select all
+      /*  var existingSelectedTypes;
+        if ( item.layer_information.is_composite){
+          existingSelectedTypes = [item.layer_information.composite_layer_id];
+        }
+        else{
+           existingSelectedTypes = item.layer_information.selectedSofarTypes;
+        }*/
         const existingSelectedTypes = item.layer_information.selectedSofarTypes;
-        console.log(`SofarTypeFilter for layer ${item.id}:`, {
+      /*  console.log(`SofarTypeFilter for layer ${item.id}:`, {
           existingSelectedTypes,
           typesCount: data.length
-        });
+        });*/
         if (existingSelectedTypes && existingSelectedTypes.length > 0) {
           setSelectedTypes(existingSelectedTypes);
         } else {

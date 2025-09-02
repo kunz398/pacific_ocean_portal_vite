@@ -242,19 +242,19 @@ const MyWorkbench = () => {
               <li className="d-flex align-items-start mb-2">
                 <FaLightbulb className="me-2" style={{ color: '#cacacaff', marginTop: 4, minWidth: '16px' }} />
                 <span className="workbench-hints-text">
-                 Select dataset and Click on "Add to Map"
+                 Choose a dataset, then Click on "Add to Map."
                 </span>
               </li>
               <li className="d-flex align-items-start mb-2">
                 <FaLightbulb className="me-2" style={{ color: '#cacacaff', marginTop: 4, minWidth: '16px' }} />
                 <span className="workbench-hints-text">
-                  Once you've added data to the map, your active layers will appear in the workbench, where you can create plots, view timeseries at any point, adjust opacity, and control how they get displayed on the map.
+                 Once you add data to the map, active layers will appear in the workbench, where you can create plots, view timeseries at any location, adjust opacity, and control how layers are displayed.
                 </span>
               </li>
               <li className="d-flex align-items-start mb-0">
                 <FaLightbulb className="me-2" style={{ color: '#cacacaff', marginTop: 4, minWidth: '16px' }} />
                 <span className="workbench-hints-text">
-                  You can Share your current map view and configuration with others by clicking the Share button.
+                  Share your map view using the Share button.
                 </span>
               </li>
             </ul>

@@ -22,7 +22,7 @@ const Aboutus = () => {
     const technicalPartners = [
         {
             name: "Bureau of Meteorology Australia (BOM)",
-            logo: "/logos/BOM1.png",
+            logo: "/logos/Bureaulogo1.png",
             description: "The Bureau of Meteorology (BOM) is Australia's national weather, climate, and water agency. ",
             website: "http://www.bom.gov.au/"
         },
@@ -34,7 +34,7 @@ const Aboutus = () => {
         },
         {
             name: "National Institute of Water and Atmospheric Research (NIWA)",
-            logo: "/logos/NIWA1.png",
+            logo: "/logos/NIWAES.png",
             description: "NIWA, the National Institute of Water and Atmospheric Research, is a Crown Research Institute established in 1992.",
             website: "https://niwa.co.nz/"
         },

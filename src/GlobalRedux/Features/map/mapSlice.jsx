@@ -31,7 +31,7 @@ const mapSlice = createSlice({
     citynamesoverlay: {
       url:"https://ocean-plotter.spc.int/plotter/proxy?url=https://geonode.pacificdata.org/geoserver/gwc/service/tms/1.0.0/geonode:pac_city_names@EPSG:3857@pbf/{z}/{x}/{-y}.png",
       //url: 'https://geonode.pacificdata.org/geoserver/geonode/pac_city_names/ows',
-      layer: 'geonode:pac_city_names',
+      layer: 'geonode:pacific_names',
     },
     /*
     citynamesoverlay: {

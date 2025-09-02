@@ -1854,23 +1854,24 @@ const MapBox = () => {
     else if(layer.layer_information.layer_type == "WFS"){
       //PLOT marker here
       var geojson_url =  layer.layer_information.url;
-      console.log("TEST_1")
+      //console.log("TEST_1")
       fetchAndPlotGeoJSON(geojson_url, layer.layer_information.id);
     }
     else if(layer.layer_information.layer_type == "SOFAR"){
       //PLOT marker here
-      console.log("Processing SOFAR layer:", {
+     /* console.log("Processing SOFAR layer:", {
         id: layer.layer_information.id,
         enabled: layer.layer_information.enabled,
         selectedTypes: layer.layer_information.selectedSofarTypes
-      });
+      });*/
       var geojson_url =  layer.layer_information.url;
       //fetchFromSOFAR(geojson_url, layer.layer_information.id);
       // console.log("ID" + layer.layer_information.id);
       // Get selected SOFAR types from layer information, default to all if not set
       const selectedTypes = layer.layer_information.selectedSofarTypes || [];
+    //  console.log(selectedTypes)
       // fetchWaveBuoy(geojson_url, layer.layer_information.id, selectedTypes);// prod
-      fetchWaveBuoy("https://ocean-obs-api.spc.int/insitu/stations/", layer.layer_information.id, selectedTypes); //local
+      fetchWaveBuoy(layer.layer_information.url, layer.layer_information.id, selectedTypes); //local
     }
     else if(layer.layer_information.layer_type == "TIDE"){
       //PLOT marker here
@@ -1881,12 +1882,12 @@ const MapBox = () => {
 
     }
     else{
-      console.log('Layer not enabled or unknown type:', {
+     /* console.log('Layer not enabled or unknown type:', {
         id: layer.layer_information.id,
         title: layer.layer_information.layer_title,
         type: layer.layer_information.layer_type,
         enabled: layer.layer_information.enabled
-      });
+      });*/
     }
       }
       else{
