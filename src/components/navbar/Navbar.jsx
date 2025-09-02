@@ -22,12 +22,14 @@ import { HiMenuAlt3, HiX } from "react-icons/hi";
 import { get_url } from '../json/urls';
 import { login, logout } from '../../utils/api';
 import BottomOffCanvas from '../tools/bottom_offcanvas';
+import { IoMdArrowDropdown } from "react-icons/io";
 
 function Navigationbar({ children }) {
   // Default to light mode
   const [darkMode, setDarkMode] = useState(false);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const sidebarCollapsed = useAppSelector((state) => state.mapbox.sidebarCollapsed);
+  const country_idx = useAppSelector((state) => state.country.short_name);
   const [showLoginModal, setShowLoginModal] = useState(false);
   const [showSignupModal, setShowSignupModal] = useState(false);
   const [loginDropdownOpen, setLoginDropdownOpen] = useState(false);
@@ -43,6 +45,7 @@ function Navigationbar({ children }) {
   const userCountry = useAppSelector((state) => state.auth.country);
   const isLoggedin = useAppSelector((state) => state.auth.isLoggedin);
   const [previewRegion, setPreviewRegion] = useState(null);
+    const [flag, setFlag] = useState()
 
   // Listen for transient region selections from Sidebar so logged-in users see a preview flag
   useEffect(() => {
@@ -93,37 +96,57 @@ function Navigationbar({ children }) {
   };
 
   const countriesxxx = [
-    { id: 26, short_name: "PCN" },
-    { id: 14, short_name: "VUT" },
-    { id: 13, short_name: "SLB" },
-    { id: 12, short_name: "WSM" },
-    { id: 10, short_name: "PLW" },
-    { id: 8,  short_name: "NRU" },
-    { id: 2,  short_name: "FJI" },
-    { id: 1,  short_name: "PAC" },
-    { id: 3,  short_name: "TON" },
-    { id: 5,  short_name: "FSM" },
-    { id: 6,  short_name: "KIR" },
-    { id: 9,  short_name: "NIU" },
-    { id: 11, short_name: "PNG" },
-    { id: 4,  short_name: "TUV" },
-    { id: 7,  short_name: "MHL" },
-    { id: 16, short_name: "COK" },
-    { id: 18, short_name: "ASM" },
-    { id: 19, short_name: "WLF" },
-    { id: 20, short_name: "NCL" },
-    { id: 21, short_name: "TKL" },
-    { id: 22, short_name: "PYF" },
-    { id: 23, short_name: "MNP" },
-    { id: 24, short_name: "GUM" },
-  ];
-  
+  { id: 26, short_name: "PCN" },
+  { id: 14, short_name: "VUT" },
+  { id: 13, short_name: "SLB" },
+  { id: 12, short_name: "WSM" },
+  { id: 10, short_name: "PLW" },
+  { id: 8,  short_name: "NRU" },
+  { id: 2,  short_name: "FJI" },
+  { id: 1,  short_name: "PAC" },
+  { id: 3,  short_name: "TON" },
+  { id: 5,  short_name: "FSM" },
+  { id: 6,  short_name: "KIR" },
+  { id: 9,  short_name: "NIU" },
+  { id: 11, short_name: "PNG" },
+  { id: 4,  short_name: "TUV" },
+  { id: 7,  short_name: "MHL" },
+  { id: 16, short_name: "COK" },
+  { id: 18, short_name: "ASM" },
+  { id: 19, short_name: "WLF" },
+  { id: 20, short_name: "NCL" },
+  { id: 21, short_name: "TKL" },
+  { id: 22, short_name: "PYF" },
+  { id: 23, short_name: "MNP" },
+  { id: 24, short_name: "GUM" },
+];
+
   // Helper function to get flag path by id
   function getCountryFlag(id) {
     const country = countriesxxx.find(c => c.id === Number(id));
     if (!country ||   country.short_name === 'PAC') return null;
     return `/flags/${country.short_name}.png`;
   }
+
+    useEffect(() => {
+    if (pathname === "/") {
+      const flagSrc = getCountryFlag(country_idx);
+      setFlag(flagSrc)
+
+    }
+    if (isLoggedin){
+      const flagSrc = getCountryFlag(userCountry);
+      setFlag(flagSrc)
+      if (userCountry !== country_idx){
+     const flagSrc = getCountryFlag(country_idx);
+      setFlag(flagSrc)
+    }
+    }
+    else{
+      const flagSrc = getCountryFlag(country_idx);
+      setFlag(flagSrc)
+    }
+  }, [pathname,country_idx,isLoggedin,flag]);
 
   // On mount, check localStorage for theme
   useEffect(() => {
@@ -393,47 +416,21 @@ function Navigationbar({ children }) {
          <div style={{ display: 'flex', alignItems: 'center', gap: '4px' }}> 
            {/* Country Flag Display - moved further left and made bigger */}
            {/* Show persisted selection for anonymous users, and auth country for logged-in users. */}
-           {(() => {
-             // Resolve which country id to show as a flag
-             // Priority: previewRegion (transient for logged-in preview) -> auth.userCountry -> persisted selectedRegion (anonymous)
-             let flagCountryId = null;
-             if (previewRegion) {
-               flagCountryId = previewRegion;
-             } else if (isLoggedin && userCountry) {
-               flagCountryId = userCountry;
-             } else {
-               // anonymous user: respect persisted selection in localStorage
-               const persisted = typeof window !== 'undefined' ? localStorage.getItem('selectedRegion') : null;
-               flagCountryId = persisted || null;
-             }
-
-             if (!flagCountryId) return null;
-             // If PAC, do not render anything
-             const flagSrc = getCountryFlag(flagCountryId);
-             if (!flagSrc) return null;
-             return (
-               <div style={{ 
-                 display: 'flex', 
-                 alignItems: 'center', 
-                 marginRight: '-27px', // Reduced spacing
-                 padding: '4px 4px'
-               }}>
-                 <img 
-                   src={flagSrc}
-                   alt="Country flag"
-                   style={{
-                     width: '80%', // increased size
-                     height: 42, // increased size          
-                     objectFit: 'cover',
-                     // border: '1px solid rgba(0, 0, 0, 0.1)'
-                   }}
-                   onError={(e) => {
-                     e.target.style.display = 'none';
-                   }}
-                 />
-               </div>
-             );
-           })()}
+           {Number(country_idx) !== 1 && flag && (
+              <img 
+                src={flag}
+                alt="Pacific Ocean" 
+                style={{ 
+                  width: 70, 
+                  height: 40, 
+                  marginRight: -8,
+                  marginTop: -12, 
+                  marginBottom: -14,
+                  marginLeft: 8,
+                  textShadow: "0 0 0.5px rgba(255, 255, 255, 0.8)" 
+                }} 
+              />
+            )}
           <button
             onClick={toggleSidebar}
             style={{
@@ -533,7 +530,7 @@ function Navigationbar({ children }) {
                     fontSize: '14px'
                   }}
                 >
-                  Login <span style={{ fontSize: '10px' }}>▼</span>
+                  Login <span style={{marginLeft:-1,fontSize: 15}}><IoMdArrowDropdown /></span>
                 </button>
               </div>
             )}

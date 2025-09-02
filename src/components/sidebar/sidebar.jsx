@@ -27,6 +27,7 @@ const SideBar = () => {
     const isVisiblecanvas = useAppSelector((state) => state.sideoffcanvas.isVisible);
     const isLoggedin = useAppSelector((state) => state.auth.isLoggedin);
     const isVisible = useAppSelector((state) => state.modal.isVisible);
+    const country_idx = useAppSelector((state) => state.country.short_name);
     const dispatch = useAppDispatch();
     
     const handleShow = () => {
@@ -42,9 +43,12 @@ const SideBar = () => {
 
     const [regions, setRegions] = useState([]);
     const [selectedRegion, setSelectedRegion] = useState("1"); 
+
+    
   
     // Fetch regions data from API
     useEffect(() => {
+       setSelectedRegion(country_idx);
       // Example API URL - replace with your actual API endpoint
       fetch(get_url('country'))
         .then((response) => response.json())
@@ -73,7 +77,7 @@ const SideBar = () => {
           }
         })
         .catch((error) => console.error('Error fetching regions:', error));
-    }, [dispatch]);
+    }, [dispatch,country_idx]);
   
     // Handle region selection
     const handleRegionChange = (e) => {

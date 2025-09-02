@@ -5,7 +5,8 @@ import { FaTimes, FaWaveSquare, FaArrowLeft } from 'react-icons/fa';
 import { Line } from 'react-chartjs-2';
 import 'chart.js/auto';
 import Lottie from 'lottie-react';
-import animationData from '@/components/lottie/live.json';
+import animationData from '../lottie/live.json';
+import { get_url } from '../json/urls';
 
 const fixedColors = [
   'rgb(255, 87, 51)',
@@ -139,19 +140,9 @@ const RealtimeComponent = ({
         try {
             let url;
             if (owner === "PACIOOS") {
-                // If start/end date are set, use them; else use default
-                const formatDate = (date) => {
-                    return date.toISOString().slice(0, 19) + 'Z';
-                };
-                const baseUrl = 'https://erddap.cdip.ucsd.edu/erddap/tabledap/wave_agg.geoJson';
-                const parameters = 'station_id,time,waveHs,waveTp,waveTa,waveDp,latitude,longitude';
-                const now = new Date();
-                const startDateObj = new Date(now);
-                startDateObj.setHours(now.getHours() - dataLimit);
-                const startDateStr = formatDate(startDateObj);
-                const endDateStr = formatDate(now);
-                const waveFlagPrimary = 1;
-                url = `${baseUrl}?${parameters}&station_id="${stationId}"&time>=${startDateStr}&time<=${endDateStr}&waveFlagPrimary=${waveFlagPrimary}`;
+                // Use your API instead of ERDDAP
+                const baseUrl = get_url('insitu-station');
+                url = `${baseUrl}/${stationId}?limit=${dataLimit}`;
             } else {
                 const token = getValueByKey(owner);
                 url = generateWaveDataUrl(stationId, token);

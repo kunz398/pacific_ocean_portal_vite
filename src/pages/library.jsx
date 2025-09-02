@@ -773,7 +773,7 @@ const Library = () => {
                   <p>Updating results...</p>
                 </div>
               ) : filteredDocuments.length > 0 ? (
-                <div className="row g-4">
+                <div className="row g-4 custom-scrollbar" style={{ maxHeight: 'calc(100vh - 170px)', overflowY: 'auto', overflowX: 'hidden' }}>
                   {filteredDocuments.map((doc, index) => (
                     <div key={doc.id || index} className="col-12 col-sm-6 col-lg-4 col-xl" style={{ flex: '0 0 18%', maxWidth: '18%', margin: '0 1%', marginBottom: '1.5rem' }}>
                       <div 

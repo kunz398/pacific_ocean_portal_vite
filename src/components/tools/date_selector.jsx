@@ -341,6 +341,9 @@ function DateSelector({item,period,startDateStr,endDateStr}) {
     );
   }
 }*/
+
+//used to work
+/*
 else if (item.layer_information.datetime_format === '3MONTHLY') {
   // Check if dateArray.current exists and has items
   if (!dateArray.current || dateArray.current.length === 0) {
@@ -386,7 +389,7 @@ else if (item.layer_information.datetime_format === '3MONTHLY') {
 
     content = (
       <div style={{ width: '80%', display: 'flex', gap: '5px', marginLeft: -20  }}>
-        {/* Year Select */}
+       
         <select 
           className="form-select form-select-sm rounded-pill"
           value={currentYear}
@@ -413,7 +416,7 @@ else if (item.layer_information.datetime_format === '3MONTHLY') {
           ))}
         </select>
 
-        {/* 3-Month Period Select */}
+    
         <select 
           className="form-select form-select-sm rounded-pill"
           value={currentPeriodStart}
@@ -438,6 +441,98 @@ else if (item.layer_information.datetime_format === '3MONTHLY') {
     );
   }
 }
+*/
+
+else if (item.layer_information.datetime_format === '3MONTHLY') {
+  if (!dateArray.current || dateArray.current.length === 0 || !currentDate) {
+    content = <div>Loading dates...</div>;
+  } else {
+    // Collect unique years and months-by-year (no duplicates)
+    const years = [
+      ...new Set(dateArray.current.map(d => new Date(d).getFullYear()))
+    ].sort((a, b) => a - b);
+
+    const monthsByYear = new Map(); // year -> sorted array of unique month numbers
+    dateArray.current.forEach(date => {
+      const d = new Date(date);
+      const y = d.getFullYear();
+      const m = d.getMonth();
+      if (!monthsByYear.has(y)) monthsByYear.set(y, new Set());
+      monthsByYear.get(y).add(m);
+    });
+    // Convert month sets to sorted arrays
+    for (const [y, mset] of monthsByYear.entries()) {
+      monthsByYear.set(y, Array.from(mset).sort((a, b) => a - b));
+    }
+
+    // Resolve current selections safely
+    const curr = currentDate instanceof Date ? currentDate : new Date(currentDate);
+    const currentYear = years.includes(curr.getFullYear()) ? curr.getFullYear() : years[0];
+    const monthsForYear = monthsByYear.get(currentYear) || [];
+    const currentMonth = monthsForYear.includes(curr.getMonth())
+      ? curr.getMonth()
+      : (monthsForYear[0] ?? 0);
+
+    content = (
+      <div style={{ width: '80%', display: 'flex', gap: '5px', marginLeft: -20 }}>
+        {/* Year Select */}
+        <select
+          className="form-select form-select-sm rounded-pill"
+          value={currentYear}
+          style={{ minWidth: '80px' }}
+          onChange={(e) => {
+            const selectedYear = parseInt(e.target.value, 10);
+            const monthsForSelectedYear = monthsByYear.get(selectedYear) || [0];
+
+            // Keep current month if available for the new year; otherwise use the first available month
+            const monthToUse = monthsForSelectedYear.includes(currentMonth)
+              ? currentMonth
+              : (monthsForSelectedYear[0] ?? 0);
+
+            const newDate = new Date(currentDate);
+            newDate.setFullYear(selectedYear);
+            newDate.setMonth(monthToUse);
+
+            setCurrentDate(newDate);
+            handleonchange3month(newDate, item);
+          }}
+        >
+          {years.map((year) => (
+            <option key={`year-${year}`} value={year}>
+              {year}
+            </option>
+          ))}
+        </select>
+
+        {/* Month Range Select (no duplicates; scoped to selected year) */}
+        <select
+          className="form-select form-select-sm rounded-pill"
+          value={currentMonth}
+          style={{ minWidth: '120px' }}
+          onChange={(e) => {
+            const selectedMonth = parseInt(e.target.value, 10);
+            const newDate = new Date(currentDate);
+            newDate.setFullYear(currentYear);
+            newDate.setMonth(selectedMonth);
+            setCurrentDate(newDate);
+            handleonchange3month(newDate, item);
+          }}
+        >
+          {monthsForYear.map((m) => {
+            const startMonth = new Date(currentYear, m, 1).toLocaleString('default', { month: 'short' });
+            const endMonth = new Date(currentYear, m + 2, 1).toLocaleString('default', { month: 'short' });
+            return (
+              <option key={`month-${currentYear}-${m}`} value={m}>
+                {startMonth} - {endMonth}
+              </option>
+            );
+          })}
+        </select>
+      </div>
+    );
+  }
+}
+
 
 else if (item.layer_information.datetime_format === 'WEEKLY_NRT') {
   if (!dateArray.current || dateArray.current.length === 0) {
@@ -544,7 +639,36 @@ else if (item.layer_information.datetime_format === 'WEEKLY_NRT') {
 
 
   else if (item.layer_information.datetime_format === 'HOURLY') {
-    content =  <DatePicker
+    content =  (
+    <>
+     <style>{`
+        /* Light selects only inside this datepicker instance */
+        .dp-light-selects .react-datepicker__month-select,
+        .dp-light-selects .react-datepicker__year-select {
+          background-color: #ffffff !important;
+          color: #111827 !important;
+          border: 1px solid #d1d5db;
+          border-radius: 6px;
+          appearance: none;
+          -webkit-appearance: none;
+          -moz-appearance: none;
+
+           padding: 4px 5px 4px 5px;
+        }
+
+        /* Optional: make header and time list light as well */
+        .dp-light-selects .react-datepicker__header {
+          background-color: #ffffff !important;
+        }
+        .dp-light-selects .react-datepicker__time-container,
+        .dp-light-selects .react-datepicker__time,
+        .dp-light-selects .react-datepicker__time-box,
+        .dp-light-selects .react-datepicker__time-list {
+          background-color: #ffffff !important;
+          color: #111827 !important;
+        }
+      `}</style>
+    <DatePicker
     showIcon
     selected={currentDate}
     minDate={startDate ? new Date(startDate) : undefined}
@@ -559,7 +683,18 @@ else if (item.layer_information.datetime_format === 'WEEKLY_NRT') {
     className="customInput rounded-pill"
     popperPlacement="bottom-start"
     popperContainer={PortalDatePicker}
-  />;
+
+      // Month/Year selection
+
+      showYearDropdown
+      showMonthDropdown
+      dropdownMode="select"
+      scrollableYearDropdown
+      yearDropdownItemNumber={50} // adjust as needed
+      calendarClassName="dp-light-selects" 
+  />
+  </>
+    )
   }
   else if (item.layer_information.datetime_format === 'WEEKLY'){
     content = (

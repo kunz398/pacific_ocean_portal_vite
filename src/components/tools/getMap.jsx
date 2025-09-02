@@ -98,6 +98,12 @@ function DynamicImage({ height }) {
       else if (layerInformation.datetime_format == '3MONTHLY'){
         dateFormatAccepted.current = "3monthly";
       }
+       else if (layerInformation.datetime_format == '3MONTHLY_SEASONAL'){
+        dateFormatAccepted.current = "3monthly_seasonal";
+      }
+      else if (layerInformation.datetime_format == 'WEEKLY_NRT'){
+        dateFormatAccepted.current = "weekly_nrt";
+      }
       else if (layerInformation.datetime_format == 'WEEKLY'){
         dateFormatAccepted.current = "weekly";
       }
@@ -333,6 +339,46 @@ function DynamicImage({ height }) {
           
             return `${startMonth} – ${endMonth}`;
           }
+          if (formatType === 'weekly_nrt') {
+           // Expecting input like "2025-08-21T00:00:00"
+            const match = sanitizedTimestamp.match(/^(\d{4})-(\d{2})-(\d{2})/);
+            if (!match) return '';
+
+            const y = parseInt(match[1], 10);
+            const m = parseInt(match[2], 10) - 1; // 0-based month
+            const d = parseInt(match[3], 10);
+
+            const startUTC = new Date(Date.UTC(y, m, d, 0, 0, 0, 0));
+            const endUTC = new Date(startUTC.getTime() + 7 * 24 * 60 * 60 * 1000);
+
+            const fmt = (dt) => {
+              const day = dt.getUTCDate();
+              const mon = dt.toLocaleString('en-US', { month: 'short', timeZone: 'UTC' });
+              return `${day} ${mon}`;
+            };
+
+            return `${fmt(startUTC)} - ${fmt(endUTC)}`;
+          }
+          if (formatType === '3monthly_seasonal') {
+            // Expecting input like "2025-01-01T00:00:00"
+            const match = sanitizedTimestamp.match(/^(\d{4})-(\d{2})/);
+            if (!match) return '';
+
+            const month = parseInt(match[2], 10) - 1; // 0-based index
+            const startMonthIndex = (month + 11) % 12; // -1 month
+            const endMonthIndex = (month + 1) % 12;   // +1 month
+
+            const startMonth = new Date(Date.UTC(2000, startMonthIndex, 1)).toLocaleString('en-US', {
+              month: 'short',
+              timeZone: 'UTC',
+            });
+            const endMonth = new Date(Date.UTC(2000, endMonthIndex, 1)).toLocaleString('en-US', {
+              month: 'short',
+              timeZone: 'UTC',
+            });
+
+            return `${startMonth} – ${endMonth}`;
+          }
           if (formatType === 'weekly') {
             var name = '4 Weekly'
             if (currentIndex == 0){
@@ -397,6 +443,26 @@ const formatShortTimestamp = (timestamp, currentIndex) => {
               month: 'short'
           });
       }
+      if (formatType === 'weekly_nrt') {
+          // Expecting input like "2025-08-21T00:00:00"
+          const match = sanitizedTimestamp.match(/^(\d{4})-(\d{2})-(\d{2})/);
+          if (!match) return '';
+
+          const y = parseInt(match[1], 10);
+          const m = parseInt(match[2], 10) - 1; // 0-based month
+          const d = parseInt(match[3], 10);
+
+          const startUTC = new Date(Date.UTC(y, m, d, 0, 0, 0, 0));
+          const endUTC = new Date(startUTC.getTime() + 7 * 24 * 60 * 60 * 1000);
+
+          const fmt = (dt) => {
+            const day = dt.getUTCDate();
+            const mon = dt.toLocaleString('en-US', { month: 'short', timeZone: 'UTC' });
+            return `${day} ${mon}`;
+          };
+
+          return `${fmt(startUTC)} - ${fmt(endUTC)}`;
+        }
       if (formatType === '3monthly') {
         // Expecting input like "2025-01-01T00:00:00"
         const match = sanitizedTimestamp.match(/^(\d{4})-(\d{2})/);
@@ -415,6 +481,26 @@ const formatShortTimestamp = (timestamp, currentIndex) => {
           timeZone: 'UTC',
         });
       
+        return `${startMonth} – ${endMonth}`;
+      }
+      if (formatType === '3monthly_seasonal') {
+        // Expecting input like "2025-01-01T00:00:00"
+        const match = sanitizedTimestamp.match(/^(\d{4})-(\d{2})/);
+        if (!match) return '';
+
+        const month = parseInt(match[2], 10) - 1; // 0-based index
+        const startMonthIndex = (month + 11) % 12; // -1 month
+        const endMonthIndex = (month + 1) % 12;   // +1 month
+
+        const startMonth = new Date(Date.UTC(2000, startMonthIndex, 1)).toLocaleString('en-US', {
+          month: 'short',
+          timeZone: 'UTC',
+        });
+        const endMonth = new Date(Date.UTC(2000, endMonthIndex, 1)).toLocaleString('en-US', {
+          month: 'short',
+          timeZone: 'UTC',
+        });
+
         return `${startMonth} – ${endMonth}`;
       }
       if (formatType === 'weekly') {

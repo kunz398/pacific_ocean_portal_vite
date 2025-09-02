@@ -53,12 +53,66 @@ const Aboutus = () => {
     ];
 
     return (
-        <div style={{ 
+        <>
+              <style>{`
+        .custom-scrollbar::-webkit-scrollbar {
+          width: 8px;
+          height: 8px;
+        }
+        
+        .custom-scrollbar::-webkit-scrollbar-track {
+          background: #e5e7eb;
+          border-radius: 10px;
+        }
+        
+        .custom-scrollbar::-webkit-scrollbar-thumb {
+          background: #9ca3af;
+          border-radius: 10px;
+          transition: background 0.3s ease;
+        }
+        
+        .custom-scrollbar::-webkit-scrollbar-thumb:hover {
+          background: #6b7280;
+        }
+        
+        .custom-scrollbar::-webkit-scrollbar-corner {
+          background: #e5e7eb;
+        }
+        
+        .custom-scrollbar {
+          scrollbar-width: thin;
+          scrollbar-color: #9ca3af #e5e7eb;
+        }
+        
+        /* Dark mode scrollbar styles */
+        body.dark-mode .custom-scrollbar::-webkit-scrollbar-track {
+          background: #2a2a2a;
+        }
+        
+        body.dark-mode .custom-scrollbar::-webkit-scrollbar-thumb {
+          background: #555555;
+        }
+        
+        body.dark-mode .custom-scrollbar::-webkit-scrollbar-thumb:hover {
+          background: #777777;
+        }
+        
+        body.dark-mode .custom-scrollbar::-webkit-scrollbar-corner {
+          background: #2a2a2a;
+        }
+        
+        body.dark-mode .custom-scrollbar {
+          scrollbar-color: #555555 #2a2a2a;
+        }
+          `}</style>
+        <div className="custom-scrollbar" style={{ 
             minHeight: 'calc(100vh - 60px)', 
             paddingBottom: '2rem',
+            overflowY: 'auto',
             overflowX: 'hidden',
             width: '100%',
-            boxSizing: 'border-box'
+            boxSizing: 'border-box',
+            height: 'calc(100vh - 60px)'
         }}>
             <div className="w-100 py-3" style={{ marginTop: 0, paddingTop: '1rem' }}>
                 <Container>
@@ -178,7 +232,7 @@ const Aboutus = () => {
                 </div>
             </Container>
             
-            {/* Global CSS to prevent horizontal overflow */}
+            {/* Global CSS with scrollbar styling */}
             <style>{`
                 #root > * {
                     max-width: 100% !important;
@@ -187,6 +241,7 @@ const Aboutus = () => {
                 
                 body {
                     overflow-x: hidden !important;
+                    overflow-y: auto !important;
                 }
                 
                 .container, .container-fluid {
@@ -201,6 +256,7 @@ const Aboutus = () => {
                 }
             `}</style>
         </div>
+        </>
     );
 };
 

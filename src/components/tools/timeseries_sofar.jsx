@@ -2,10 +2,10 @@
 import React, { useState, useEffect, useRef, lazy, Suspense } from 'react';
 import { Spinner, Form, Button } from 'react-bootstrap'; 
 import 'chart.js/auto'; 
-import { useAppSelector } from '@/GlobalRedux/hooks';
+import { useAppSelector } from '../../GlobalRedux/hooks';
 import Lottie from "lottie-react";
-import animationData from "@/components/lottie/live.json";
-import { get_url } from '@/components/json/urls';
+import animationData from "../lottie/live.json";
+import { get_url } from '../json/urls';
 
 const Line = lazy(() => import('react-chartjs-2').then((mod) => ({ default: mod.Line })));
 
@@ -297,53 +297,54 @@ function TimeseriesSofar({ height }) {
   }
 };
 
-  const fetchWaveDataV2 = async (url, setDataFn) => {
-    try {
-      if (!url) {
-        setDataFn([], []);
-        return;
-      }
+  // OLD ERDDAP fetch function (commented out, now using fetchWaveData for all APIs):
+  // const fetchWaveDataV2 = async (url, setDataFn) => {
+  //   try {
+  //     if (!url) {
+  //       setDataFn([], []);
+  //       return;
+  //     }
    
-      setIsLoading(true);
-      const res = await fetch(url, {
-        method: 'GET',
-        mode: 'cors',
-        credentials: 'omit', // Fixes CORS for public ERDDAP
-        headers: {
-          'Accept': 'application/json',
-        },
-      });
+  //     setIsLoading(true);
+  //     const res = await fetch(url, {
+  //       method: 'GET',
+  //       mode: 'cors',
+  //       credentials: 'omit', // Fixes CORS for public ERDDAP
+  //       headers: {
+  //         'Accept': 'application/json',
+  //       },
+  //     });
 
-      if (!res.ok) {
-        throw new Error(`HTTP error! status: ${res.status}`);
-      }
+  //     if (!res.ok) {
+  //       throw new Error(`HTTP error! status: ${res.status}`);
+  //     }
 
-      const data = await res.json();
-      const features = data.features;
+  //     const data = await res.json();
+  //     const features = data.features;
 
-      const times = features.map(feature => feature.properties.time);
-      const waveHeights = features.map(feature => feature.properties.waveHs);
-      const peakPeriods = features.map(feature => feature.properties.waveTp);
-      const meanDirections = features.map(feature => feature.properties.waveDp);
+  //     const times = features.map(feature => feature.properties.time);
+  //     const waveHeights = features.map(feature => feature.properties.waveHs);
+  //     const peakPeriods = features.map(feature => feature.properties.waveTp);
+  //     const meanDirections = features.map(feature => feature.properties.waveDp);
 
-      const formattedTimes = times.map(time => {
-        const date = new Date(time);
-        return `${String(date.getDate()).padStart(2, '0')}-${String(date.getMonth() + 1).padStart(2, '0')}-${String(date.getFullYear()).slice(-2)}T${String(date.getHours()).padStart(2, '0')}:${String(date.getMinutes()).padStart(2, '0')}`;
-      });
+  //     const formattedTimes = times.map(time => {
+  //       const date = new Date(time);
+  //       return `${String(date.getDate()).padStart(2, '0')}-${String(date.getMonth() + 1).padStart(2, '0')}-${String(date.getFullYear()).slice(-2)}T${String(date.getHours()).padStart(2, '0')}:${String(date.getMinutes()).padStart(2, '0')}`;
+  //     });
 
-      setDataFn(formattedTimes, [
-        { values: waveHeights, label: 'Significant Wave Height (m)' },
-        { values: peakPeriods, label: 'Peak Period (s)' },
-        { values: meanDirections, label: 'Mean Direction (degrees)' }
-      ]);
+  //     setDataFn(formattedTimes, [
+  //       { values: waveHeights, label: 'Significant Wave Height (m)' },
+  //       { values: peakPeriods, label: 'Peak Period (s)' },
+  //       { values: meanDirections, label: 'Mean Direction (degrees)' }
+  //     ]);
       
-    } catch (error) {
-      console.log(`Error fetching wave data:`, error);
-      setDataFn([], []);
-    } finally {
-      setIsLoading(false);
-    }
-  };
+  //   } catch (error) {
+  //     console.log(`Error fetching wave data:`, error);
+  //     setDataFn([], []);
+  //   } finally {
+  //     setIsLoading(false);
+  //   }
+  // };
 
   const setChartDataFn = (times, datasets) => {
 
@@ -464,10 +465,15 @@ function TimeseriesSofar({ height }) {
   else{
     if (isCoordinatesValid && mapLayer.length > 0) {
     // Prevent duplicate calls by checking if same URL was called recently (within 1 second)
-    const baseUrl = 'https://erddap.cdip.ucsd.edu/erddap/tabledap/wave_agg.geoJson';
-    const parameters = 'station_id,time,waveHs,waveTp,waveTa,waveDp,latitude,longitude';
-    const waveFlagPrimary = 1;
-    const url = `${baseUrl}?${parameters}&station_id="${station}"&waveFlagPrimary=${waveFlagPrimary}`;
+    // OLD ERDDAP API (commented out):
+    // const baseUrl = 'https://erddap.cdip.ucsd.edu/erddap/tabledap/wave_agg.geoJson';
+    // const parameters = 'station_id,time,waveHs,waveTp,waveTa,waveDp,latitude,longitude';
+    // const waveFlagPrimary = 1;
+    // const url = `${baseUrl}?${parameters}&station_id="${station}"&waveFlagPrimary=${waveFlagPrimary}`;
+    
+    // NEW API using get_url('insitu-station'):
+    const baseUrl = get_url('insitu-station');
+    const url = `${baseUrl}/${station}?limit=${dataLimit}`;
     const now = Date.now();
     
     if (lastRequestRef.current && 
@@ -481,11 +487,15 @@ function TimeseriesSofar({ height }) {
     lastRequestRef.current = { url, timestamp: now };
 
     // console.log('🚀 Making API call (PACIOOS):', url);
-    fetchWaveDataV2(url, setChartDataFn);
+    // OLD: fetchWaveDataV2(url, setChartDataFn);
+    // NEW: Use the same fetch function as non-PACIOOS
+    fetchWaveData(url, setChartDataFn);
 
       if (liveMode && isActive) {
         refreshIntervalRef.current = setInterval(() => {
-          fetchWaveDataV2(url, setChartDataFn);
+          // OLD: fetchWaveDataV2(url, setChartDataFn);
+          // NEW: Use the same fetch function as non-PACIOOS
+          fetchWaveData(url, setChartDataFn);
         }, 1800000);
       }
 
@@ -556,18 +566,19 @@ function TimeseriesSofar({ height }) {
         endDateStr = formatDate(now);
       }
 
-      const baseUrl = 'https://erddap.cdip.ucsd.edu/erddap/tabledap/wave_agg.geoJson';
-      const parameters = 'station_id,time,waveHs,waveTp,waveTa,waveDp,latitude,longitude';
-      const waveFlagPrimary = 1;
+      // Use your API instead of ERDDAP
+      const baseUrl = get_url('insitu-station');
+      const url = `${baseUrl}/${station}?limit=${dataLimit}`;
 
-      // Construct URL with variables
-      const url = `${baseUrl}?${parameters}&station_id="${station}"&time>=${encodeURIComponent(startDateStr)}&time<=${encodeURIComponent(endDateStr)}&waveFlagPrimary=${waveFlagPrimary}`;
-
-      fetchWaveDataV2(url, setChartDataFn);
+      // OLD: fetchWaveDataV2(url, setChartDataFn);
+      // NEW: Use the same fetch function as non-PACIOOS
+      fetchWaveData(url, setChartDataFn);
 
       if (liveMode && isActive) {
         refreshIntervalRef.current = setInterval(() => {
-          fetchWaveDataV2(url, setChartDataFn);
+          // OLD: fetchWaveDataV2(url, setChartDataFn);
+          // NEW: Use the same fetch function as non-PACIOOS
+          fetchWaveData(url, setChartDataFn);
         }, 1800000);
       }
 

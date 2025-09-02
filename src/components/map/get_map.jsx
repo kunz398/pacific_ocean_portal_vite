@@ -57,7 +57,7 @@ const createFirefoxCompatibleTileLayer = (url, options = {}) => {
             const newUrl = this.getTileUrl(tile.coords) + (this.getTileUrl(tile.coords).includes('?') ? '&' : '?') + '_retry=' + retryCount + '&_cb=' + Date.now();
             tile.src = newUrl;
           } catch (error) {
-            console.warn('Error retrying tile load:', error);
+           // console.warn('Error retrying tile load:', error);
             done(e, tile);
           }
         }, 1000 * (retryCount + 1));
@@ -123,7 +123,7 @@ const MapBox = () => {
         if (e?.message?.includes('_leaflet_pos') && attempt < 10) {
           return setTimeout(() => scheduleMapOp(fn, attempt + 1), 120 * (attempt + 1));
         }
-        console.warn('Map op failed (final):', e);
+       // console.warn('Map op failed (final):', e);
       }
     };
     const flushOpQueue = () => {
@@ -308,7 +308,7 @@ const MapBox = () => {
       try {
         mapRef.current.removeLayer(markerClusterRef.current);
       } catch (error) {
-        console.error('Error removing marker cluster:', error);
+       // console.error('Error removing marker cluster:', error);
       }
         markerClusterRef.current = null;
       }
@@ -319,12 +319,12 @@ const MapBox = () => {
     };
 
     const fetchWaveBuoy = async (url, id, selectedTypes = []) => {
-      console.log("fetchWaveBuoy called with:", {
+     /* console.log("fetchWaveBuoy called with:", {
         url: url,
         id: id,
         selectedTypes: selectedTypes,
         selectedTypesLength: selectedTypes.length
-      });
+      });*/
     
       // Cleanup any pending requests and markers
       cleanupMarkers();
@@ -370,10 +370,10 @@ const MapBox = () => {
           // Store the new marker cluster group
           markerClusterRef.current = markerClusterGroup;
 
-          console.log("Adding markers to map:", {
+      /*    console.log("Adding markers to map:", {
             processedGeoJSONFeatures: processedGeoJSON.features.length,
             markerClusterGroup: markerClusterGroup
-          });
+          });*/
           
           // Add markers to the group
           const geoJsonLayer = L.geoJSON(processedGeoJSON, {
@@ -477,7 +477,7 @@ const MapBox = () => {
             try {
           mapRef.current.addLayer(markerClusterGroup);
             } catch (error) {
-              console.error('Error adding marker cluster to map:', error);
+           //   console.error('Error adding marker cluster to map:', error);
             }
           }
           
@@ -495,7 +495,7 @@ const MapBox = () => {
           });
 
         } catch (error) {
-          console.error('Error processing wave buoy data:', error);
+         // console.error('Error processing wave buoy data:', error);
         } finally {
           pendingRequestRef.current = null;
         }
@@ -507,11 +507,11 @@ const MapBox = () => {
       const entries = Array.isArray(raw) ? raw : [raw];
       let filteredEntries = entries;
       
-      console.log("transformToGeoJSON called with:", {
+     /* console.log("transformToGeoJSON called with:", {
         rawLength: entries.length,
         selectedTypes: selectedTypes,
         selectedTypesLength: selectedTypes.length
-      });
+      });*/
       
       // // Debug: Log first entry to see API structure
       // if (entries.length > 0) {
@@ -522,7 +522,7 @@ const MapBox = () => {
         filteredEntries = entries.filter(entry => {
           return selectedTypes.includes(entry.type_id);
         });
-        console.log("Filtered entries:", filteredEntries.length);
+      //  console.log("Filtered entries:", filteredEntries.length);
       } else {
         // If no types selected, show no entries (empty array means no markers)
         filteredEntries = [];
@@ -576,7 +576,7 @@ const MapBox = () => {
               }
           });
         } catch (error) {
-          console.error('Error removing existing cluster layers:', error);
+        //  console.error('Error removing existing cluster layers:', error);
         }
       }
       
@@ -671,7 +671,7 @@ const MapBox = () => {
               id: "tide_gauge",
               pointToLayer: function(feature, latlng) {
                 if (!latlng || typeof latlng.lat !== 'number' || typeof latlng.lng !== 'number') {
-                  console.warn('Invalid latlng:', latlng, feature);
+                //  console.warn('Invalid latlng:', latlng, feature);
                   return null;
                 }
               
@@ -716,7 +716,7 @@ const MapBox = () => {
                           // if (isDataAvailable) {
                             // Set data limit with fallback to default if not provided
                             const dataLimit = feature.properties.data_limit || 100;
-                            console.log("dataLimit", dataLimit);
+                         //   console.log("dataLimit", dataLimit);
                             dispatch(setDataLimit(dataLimit)); 
                             dispatch(setCoordinates({ x, y, sizex, sizey, bbox, station }));
                             // Use the active layer id to open the correct bottom canvas
@@ -740,7 +740,7 @@ const MapBox = () => {
           mapRef.current.addLayer(markerClusterGroup);
       
       } catch (error) {
-          console.error('Error fetching GeoJSON data:', error);
+      //    console.error('Error fetching GeoJSON data:', error);
       }
     };
     const fetchAndPlotGeoJSONTIDE = async (url, id) => {
@@ -890,7 +890,7 @@ const MapBox = () => {
           mapRef.current.addLayer(markerClusterGroup);
     
       } catch (error) {
-          console.error('Error fetching GeoJSON data:', error);
+        //  console.error('Error fetching GeoJSON data:', error);
       }
     };
     
@@ -1187,7 +1187,7 @@ const MapBox = () => {
             
             // If more than 50% of SPC tiles failed, switch to Bing Maps fallback
             if (totalTiles > 0 && failedTiles > totalTiles * 0.5) {
-              console.warn('SPC tiles failed to load, switching to Bing Maps fallback');
+           //   console.warn('SPC tiles failed to load, switching to Bing Maps fallback');
               isBing.current = true;
               
               // Remove SPC layer
@@ -1484,7 +1484,6 @@ const MapBox = () => {
        //Add new layers from state
 
         if(layers.length === 0){
-          console.log();
           setShowTime(false)
         }
   
@@ -2306,14 +2305,16 @@ const MapBox = () => {
         </div>
       )} */}
       
-      <style jsx>{`
-        @keyframes fadeInOut {
-          0% { opacity: 0; transform: translate(-50%, -50%) scale(0.8); }
-          15% { opacity: 1; transform: translate(-50%, -50%) scale(1); }
-          85% { opacity: 1; transform: translate(-50%, -50%) scale(1); }
-          100% { opacity: 0; transform: translate(-50%, -50%) scale(0.8); }
-        }
-      `}</style>
+      <style>
+  {`
+    @keyframes fadeInOut {
+      0% { opacity: 0; transform: translate(-50%, -50%) scale(0.8); }
+      15% { opacity: 1; transform: translate(-50%, -50%) scale(1); }
+      85% { opacity: 1; transform: translate(-50%, -50%) scale(1); }
+      100% { opacity: 0; transform: translate(-50%, -50%) scale(0.8); }
+    }
+  `}
+</style>
       
       <ShareWorkbench
         show={showShareModal}
