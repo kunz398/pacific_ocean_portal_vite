@@ -1,6 +1,6 @@
 import { createSlice } from '@reduxjs/toolkit';
 import L from 'leaflet';
-
+import { get_url } from '../../../components/json/urls';
 const mapSlice = createSlice({
   name: 'mapbox',
   initialState: {
@@ -16,29 +16,30 @@ const mapSlice = createSlice({
       dataLimit: 100, // Default data limit
     },
     eezoverlay: {
-      url: "https://ocean-plotter.spc.int/plotter/proxy?url=https://geonode.pacificdata.org/geoserver/gwc/service/tms/1.0.0/geonode:global_eez_200nm@EPSG:3857@pbf/{z}/{x}/{-y}.png",
+      //url: "https://ocean-plotter.spc.int/plotter/proxy?url=https://geonode.pacificdata.org/geoserver/gwc/service/tms/1.0.0/geonode:global_eez_200nm@EPSG:3857@pbf/{z}/{x}/{-y}.png",
       //url: 'https://geonode.pacificdata.org/geoserver/geonode/global_eez_200nm/ows',
-      //url: get_url('geowebcache')+'/eez/geonode/global_eez_200nm/wms',
+      url: get_url('geowebcache')+'/eez/geonode/global_eez_200nm/ows',
       layer: 'geonode:global_eez_200nm',
     },
     coastlineoverlay: {
       //url: 'https://geonode.pacificdata.org/geoserver/gwc/service/tms/1.0.0/geonode:pac_coastline@EPSG:3857@pbf/{z}/{x}/{-y}.png',
-      url:"https://ocean-plotter.spc.int/plotter/proxy?url=https://geonode.pacificdata.org/geoserver/gwc/service/tms/1.0.0/geonode:pac_coastline@EPSG:3857@pbf/{z}/{x}/{-y}.png",
+      //url:"https://ocean-plotter.spc.int/plotter/proxy?url=https://geonode.pacificdata.org/geoserver/gwc/service/tms/1.0.0/geonode:pac_coastline@EPSG:3857@pbf/{z}/{x}/{-y}.png",
       //url:"https://geonode.pacificdata.org/geoserver/geonode/pac_coastline/ows",
-      //url: get_url('geowebcache')+'/coastline/geonode/pac_coastline/ows',
+      url: get_url('geowebcache')+'/coastline/geonode/pacific_coastlines/ows',
       layer: 'geonode:pacific_coastlines',
     },
+    /*
     citynamesoverlay: {
       url:"https://ocean-plotter.spc.int/plotter/proxy?url=https://geonode.pacificdata.org/geoserver/gwc/service/tms/1.0.0/geonode:pac_city_names@EPSG:3857@pbf/{z}/{x}/{-y}.png",
       //url: 'https://geonode.pacificdata.org/geoserver/geonode/pac_city_names/ows',
       layer: 'geonode:pacific_names',
-    },
-    /*
-    citynamesoverlay: {
-      url: 'https://opmgeoserver.gem.spc.int/geoserver/spc/wms',
-      //url: get_url('geowebcache')+'/pacificnames/geoserver/spc/wms',
-      layer: '	spc:osm_pacific_islands_2',
     },*/
+    
+    citynamesoverlay: {
+      //url: 'https://opmgeoserver.gem.spc.int/geoserver/spc/wms',
+      url: get_url('geowebcache')+'/pacificnames/geonode/pacific_names/ows',
+      layer: 'spc:pacific_names',
+    },
     enable_eez: true,
     enable_coastline: true,
     enable_citynames: true,

@@ -2077,16 +2077,17 @@ const MapBox = () => {
         };
 
         if (enable_eez) {
-          const newWmsLayer =  L.tileLayer(eezoverlay.url,{id:'eez'});
-          addWithLoading(newWmsLayer, 'eez');
+       //   const newWmsLayer =  L.tileLayer(eezoverlay.url,{id:'eez'});
+         
           //setWmsLayer2(newWmsLayer);
-          /*const newWmsLayer = L.tileLayer.wms(eezoverlay.url, {
+          const newWmsLayer = L.tileLayer.wms(eezoverlay.url, {
             layers: eezoverlay.layer, // Replace with your WMS layer name
             format: 'image/png',
             transparent: true,
           }).addTo(mapRef.current);
-          */
+          
           setWmsLayer(newWmsLayer);
+          addWithLoading(newWmsLayer, 'eez');
         } else {
           if (wmsLayer && mapRef.current && isMapInitialized.current) {
             try {
@@ -2101,17 +2102,17 @@ const MapBox = () => {
           }
         }
         if(enable_coastline){
-          const newWmsLayer2 =  L.tileLayer(coastlineoverlay.url,{id:'coastline'});
-          addWithLoading(newWmsLayer2, 'coastline');
+         // const newWmsLayer2 =  L.tileLayer(coastlineoverlay.url,{id:'coastline'});
+          
           //setWmsLayer2(newWmsLayer2);
-          /*
-          const newWmsLayer2 = L.tileLayer.wms(coastlineoverlay.url, {
+                    const newWmsLayer2 = L.tileLayer.wms(coastlineoverlay.url, {
             layers: coastlineoverlay.layer, // Replace with your WMS layer name
             format: 'image/png',
             transparent: true,
           }).addTo(mapRef.current);
-          */
+          
           setWmsLayer2(newWmsLayer2);
+          addWithLoading(newWmsLayer2, 'coastline');
           
         }
         else{
@@ -2128,16 +2129,17 @@ const MapBox = () => {
           }
         }
         if(enable_citynames){
-          const newWmsLayer3 =  L.tileLayer(citynamesoverlay.url,{id:"pacnames"});
-          addWithLoading(newWmsLayer3, 'pacnames');
-          /*
+         // const newWmsLayer3 =  L.tileLayer(citynamesoverlay.url,{id:"pacnames"});
+         // addWithLoading(newWmsLayer3, 'pacnames');
+          
           const newWmsLayer3 = L.tileLayer.wms(citynamesoverlay.url, {
             layers: citynamesoverlay.layer, // Replace with your WMS layer name
             format: 'image/png',
             transparent: true,
           }).addTo(mapRef.current);
-          */
+          
           setWmsLayer3(newWmsLayer3);
+          addWithLoading(newWmsLayer3, 'pacnames');
         }
         else{
           if (wmsLayer3 && mapRef.current && isMapInitialized.current) {

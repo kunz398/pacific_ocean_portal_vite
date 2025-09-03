@@ -29,6 +29,7 @@
         return 'https://ocean-cgi.spc.int'
       case 'geowebcache':
         return 'https://ocean-plotter.spc.int/plotter/cache'
+        //return 'https://localhost:8000/plotter/cache'
       case 'insitu':
         return 'https://ocean-obs-api.spc.int/insitu/types/'
       case 'insitu-station':
