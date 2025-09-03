@@ -1156,7 +1156,7 @@ const MapBox = () => {
         // Check if we should use satellite view based on selectedOption
         if (selectedOption === 'bing') {
           // Use ESRI World Imagery for satellite view (free alternative to Bing)
-          const satelliteLayer = L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}', {
+          const satelliteLayer = L.tileLayer('https://ocean-plotter.spc.int/plotter/cache/basemap/{z}/{x}/{y}.png', {
             attribution: '© Pacific Community SPC | Tiles &copy; Esri &mdash; Source: Esri, i-cubed, USDA, USGS, AEX, GeoEye, Getmapping, Aerogrid, IGN, IGP, UPR-EGP, and the GIS User Community',
             maxZoom: 18,
             minZoom: 2
@@ -2182,12 +2182,12 @@ const MapBox = () => {
         }
         else if(event.target.value === "bing"){
           isBing.current = true;
-          const satelliteLayer = L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}', {
+          const satelliteLayer = L.tileLayer('https://ocean-plotter.spc.int/plotter/cache/basemap/{z}/{x}/{y}.png', {
             attribution: '© Pacific Community SPC | Tiles &copy; Esri &mdash; Source: Esri, i-cubed, USDA, USGS, AEX, GeoEye, Getmapping, Aerogrid, IGN, IGP, UPR-EGP, and the GIS User Community',
             maxZoom: 18,
             minZoom: 2
           }).addTo(mapRef.current);
-          dispatch(setBaseMapLayer({ url: 'https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}', attribution:'&copy; Pacific Community SPC' }));
+          dispatch(setBaseMapLayer({ url: 'https://ocean-plotter.spc.int/plotter/cache/basemap/{z}/{x}/{y}.png', attribution:'&copy; Pacific Community SPC' }));
         }
         else{
           isBing.current = false;

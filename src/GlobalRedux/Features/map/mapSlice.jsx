@@ -10,7 +10,7 @@ const mapSlice = createSlice({
     layers: [],
     basemap: {
       //url: 'https://{s}.basemaps.cartocdn.com/rastertiles/voyager_nolabels/{z}/{x}/{y}{r}.png',
-      url: 'https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}',
+      url: 'https://ocean-plotter.spc.int/plotter/cache/basemap/{z}/{x}/{y}.png',
       //url: get_url('geowebcache')+'/basemap/{z}/{x}/{y}.png',
       attribution: '&copy; Pacific Community SPC',
       dataLimit: 100, // Default data limit
