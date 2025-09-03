@@ -419,7 +419,6 @@ function Navigationbar({ children }) {
            {Number(country_idx) !== 1 && flag && (
               <img 
                 src={flag}
-                alt="Pacific Ocean" 
                 style={{ 
                   width: 70, 
                   height: 40, 
