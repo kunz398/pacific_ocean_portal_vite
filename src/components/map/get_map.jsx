@@ -453,7 +453,8 @@ const MapBox = () => {
                           sizey: null,
                           bbox: null, 
                           station: feature.properties.spotter_id,
-                          country_code: feature.properties.owner 
+                          country_code: feature.properties.owner,
+                          display_name:  feature.properties.display_name
                         }));
             // Use the active layer id to open the correct bottom canvas
             dispatch(showoffCanvas(id));
@@ -1152,7 +1153,45 @@ const MapBox = () => {
             attributionElement.style.textOverflow = 'ellipsis';
           }
         }, 100);
+        let storedBaseMap = null;
+        try {
+          storedBaseMap = JSON.parse(localStorage.getItem('basemap'));
+        } catch (e) {
+          storedBaseMap = null;
+        }
 
+        // Step 2: Choose which basemap to use
+        // If storedBaseMap exists and has a url, use it; else use Redux basemap
+        const initialBasemap = (storedBaseMap && storedBaseMap.url) ? storedBaseMap : basemap;
+       // console.log(initialBasemap)
+        setSelectedOption(initialBasemap.option);
+        // Step 3: Sync Redux if needed
+        // If the stored basemap differs from Redux, update Redux
+        // (You may want to check by url or attribution or both)
+        if (storedBaseMap && storedBaseMap.url !== basemap.url) {
+          dispatch(setBaseMapLayer(storedBaseMap)); // update Redux store
+        }
+        // Step 4: Add basemap layer
+        if (initialBasemap.url.includes('opentopomap')) {
+          L.tileLayer(initialBasemap.url, {
+            attribution: initialBasemap.attribution || '© Pacific Community SPC'
+          }).addTo(mapRef.current);
+          isBing.current = false;
+        } else if (initialBasemap.url.includes('bing') || initialBasemap.url.includes('ocean-plotter.spc.int/plotter/cache/basemap')) {
+          L.tileLayer(initialBasemap.url, {
+            attribution: initialBasemap.attribution || '© Pacific Community SPC | Tiles &copy; Esri &mdash; Source: Esri, ...',
+            maxZoom: 18,
+            minZoom: 2
+          }).addTo(mapRef.current);
+          isBing.current = true;
+        } else {
+          L.tileLayer(initialBasemap.url, {
+            attribution: initialBasemap.attribution || '© Pacific Community SPC'
+          }).addTo(mapRef.current);
+          isBing.current = false;
+        }
+
+        /*
         // Check if we should use satellite view based on selectedOption
         if (selectedOption === 'bing') {
           // Use ESRI World Imagery for satellite view (free alternative to Bing)
@@ -1168,7 +1207,7 @@ const MapBox = () => {
             attribution: '© Pacific Community SPC',
           }).addTo(mapRef.current);
           isBing.current = false;
-        }
+        }*/
       
       // Add fallback mechanism for SPC tiles (only if not using satellite)
       const checkSPCTilesLoaded = () => {
@@ -2159,8 +2198,10 @@ const MapBox = () => {
         
 
       }, [layers,basemap,enable_eez,bounds,enable_citynames,enable_coastline]);
-
+      /*
       const handleRadioChange = (event) => {
+         const value = event.target.value;
+        localStorage.setItem("basemap", value);
         // Remove existing base layers
         if (mapRef.current && isMapInitialized.current) {
           mapRef.current.eachLayer(layer => {
@@ -2199,6 +2240,68 @@ const MapBox = () => {
           dispatch(setBaseMapLayer({ url: 'https://spc-osm.spc.int/tile/{z}/{x}/{y}.png', attribution:'&copy; Pacific Community SPC' }));
         }
         setSelectedOption(event.target.value);
+      };
+      */
+     const handleRadioChange = (event) => {
+        const value = event.target.value;
+        let basemapObj;
+
+        // Remove existing base layers
+        if (mapRef.current && isMapInitialized.current) {
+          mapRef.current.eachLayer(layer => {
+            if (
+              layer._url && (
+                layer._url.includes('spc-osm.spc.int') ||
+                layer._url.includes('opentopomap') ||
+                layer._url.includes('arcgisonline.com') ||
+                layer.options.bingMapsKey
+              )
+            ) {
+              mapRef.current.removeLayer(layer);
+            }
+          });
+        }
+
+        if (value === "osm") {
+          isBing.current = false;
+          basemapObj = {
+            url: 'https://{s}.tile.opentopomap.org/{z}/{x}/{y}.png',
+            attribution: '© Pacific Community SPC',
+            option:value
+          };
+          L.tileLayer(basemapObj.url, { attribution: basemapObj.attribution }).addTo(mapRef.current);
+        } else if (value === "bing") {
+          isBing.current = true;
+          basemapObj = {
+            url: 'https://ocean-plotter.spc.int/plotter/cache/basemap/{z}/{x}/{y}.png',
+            attribution: '© Pacific Community SPC | Tiles &copy; Esri &mdash; Source: Esri, i-cubed, USDA, USGS, AEX, GeoEye, Getmapping, Aerogrid, IGN, IGP, UPR-EGP, and the GIS User Community',
+            maxZoom: 18,
+            minZoom: 2,
+            option:value
+          };
+          L.tileLayer(basemapObj.url, {
+            attribution: basemapObj.attribution,
+            maxZoom: basemapObj.maxZoom,
+            minZoom: basemapObj.minZoom
+          }).addTo(mapRef.current);
+        } else {
+          isBing.current = false;
+          basemapObj = {
+            url: 'https://spc-osm.spc.int/tile/{z}/{x}/{y}.png',
+            attribution: '© Pacific Community SPC',
+            option:value
+          };
+          L.tileLayer(basemapObj.url, { attribution: basemapObj.attribution }).addTo(mapRef.current);
+        }
+        console.log(basemapObj)
+
+        // Save the full basemap object to localStorage
+        localStorage.setItem("basemap", JSON.stringify(basemapObj));
+
+        // Sync to Redux store
+        dispatch(setBaseMapLayer(basemapObj));
+
+        setSelectedOption(value);
       };
 
       const handleCheckboxChange = (event) => {

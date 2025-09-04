@@ -5,6 +5,7 @@ import 'chart.js/auto';
 import { useAppSelector } from '../../GlobalRedux/hooks';
 import Lottie from "lottie-react";
 import animationData from "../lottie/live.json";
+import times from "../lottie/times.json";
 import { get_url } from '../json/urls';
 
 const Line = lazy(() => import('react-chartjs-2').then((mod) => ({ default: mod.Line })));
@@ -25,7 +26,7 @@ const getColorByIndex = (index) => {
 function TimeseriesSofar({ height }) {
   const mapLayer = useAppSelector((state) => state.mapbox.layers);
   const lastlayer = useRef(0);
-  const { x, y, sizex, sizey, bbox, station,country_code } = useAppSelector((state) => state.coordinate.coordinates);
+  const { x, y, sizex, sizey, bbox, station,country_code,display_name } = useAppSelector((state) => state.coordinate.coordinates);
   const [chartData, setChartData] = useState({
     labels: [],
     datasets: [],
@@ -276,13 +277,27 @@ function TimeseriesSofar({ height }) {
   }
   //y-axis datasets
   const yLabels = dataLabels.filter(label => label.trim() !== timeLabel);
+    const times = waveData.map(entry => {
+  const time = entry[timeLabel];
+  // If time is ISO string, strip seconds and always append 'Z'
+  if (typeof time === 'string') {
+    // Match "T12:34:56", "T12:34:56.789", "T12:34", etc.
+    // Remove seconds, keep "T12:34", and add 'Z' at the end
+    const match = time.match(/^(.+T\d{2}:\d{2})/);
+    const base = match ? match[1] : time;
+    return base + 'Z';
+  }
+  // If time is a Date object, format as "YYYY-MM-DDTHH:MMZ"
+  const date = new Date(time);
+  return `${date.getFullYear()}-${String(date.getMonth() + 1).padStart(2, '0')}-${String(date.getDate()).padStart(2, '0')}T${String(date.getHours()).padStart(2, '0')}:${String(date.getMinutes()).padStart(2, '0')}Z`;
+});
 
     // X-axis labels (format as UTC)
-    const times = waveData.map(entry => {
+   /* const times = waveData.map(entry => {
       const time = entry[timeLabel];
       const date = new Date(time);      
       return `${String(date.getDate()).padStart(2, '0')}-${String(date.getMonth() + 1).padStart(2, '0')}-${String(date.getFullYear()).slice(-2)}T${String(date.getHours()).padStart(2, '0')}:${String(date.getMinutes()).padStart(2, '0')}`;
-    });
+    });*/
       // Y-axis datasets (dynamic)
       const datasets = yLabels.map(label => ({
         label: label.replace(/_/g, ' ').replace(/\b\w/g, l => l.toUpperCase()), 
@@ -374,6 +389,8 @@ function TimeseriesSofar({ height }) {
     ...ds,
     values: indices.map(i => ds.values[i])
   }));
+  //////////////SRTING TIMES///////////////// removed sortedTimes and sortedDatasets
+
     
     setChartData({
       labels: sortedTimes,
@@ -689,7 +706,7 @@ function TimeseriesSofar({ height }) {
             <>
               <Lottie
                 animationData={animationData}
-                style={{ width: 20, height: 20, marginRight: '-4px',marginTop:'-8px' }}
+                style={{ width: 50, height: 50, marginRight: '-12px',marginTop:'-1px' }}
                 loop={true}
               />
               <i className="fas fa-circle" style={{ fontSize: '12px', color: '#28a745', marginRight: '5px' }}></i>
@@ -729,10 +746,49 @@ function TimeseriesSofar({ height }) {
               border: '1px solid var(--color-secondary, #dee2e6)'
             }}
           />
+           <style>
+{`
+  @keyframes pulse-text {
+    0% {
+      transform: scale(1);
+      color: #1e90ff;
+      text-shadow: 0 0 8px #1e90ff80;
+    }
+    50% {
+      transform: scale(1.16);
+      color: #1976d2;
+      text-shadow: 0 0 20px #1e90ff;
+    }
+    100% {
+      transform: scale(1);
+      color: #1e90ff;
+      text-shadow: 0 0 8px #1e90ff80;
+    }
+  }
+  .pulse-utc {
+    display: inline-block;
+    animation: pulse-text 1.4s infinite;
+    font-weight: bold;
+    font-size: 15px;
+    letter-spacing: 0.5px;
+    padding-left: 10px;
+    padding-top: 14px;
+    color: #1e90ff;
+    text-shadow: 0 0 6px #1e90ff80;
+  }
+`}
+</style>
+  <p style={{paddingLeft:10, paddingTop:14, fontSize:13, fontWeight:'bold'}}>
+          Station Name: {display_name}
+
+        </p>
+         
         </div>
+      
 
         {/* Date controls moved to far right */}
         <div style={{ display: 'flex', alignItems: 'center', marginLeft: 'auto', color: 'var(--color-text, #181c20)' }}>
+               
           <span style={{ fontSize: '12px', marginRight: '6px' }}>Start:</span>
           <Form.Control
             type="date"
@@ -889,6 +945,11 @@ function TimeseriesSofar({ height }) {
           // Build the scales object
           const scales = {
             x: {
+              title: {
+      display: true,
+      text: 'Time (UTC)',
+      color: textColor,
+    },
               ticks: {
                 display: true,
                 maxRotation: 45,
