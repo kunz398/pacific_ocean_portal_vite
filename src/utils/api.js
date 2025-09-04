@@ -85,8 +85,8 @@ export async function login(username, password) {
         country_idx = userObj.country.id;
       }
     
-      // Store the countryId and access token in the session
-      await createSession(country_idx, access);
+      // Store the countryId, userId, and access token in the session
+      await createSession(country_idx, username, access);
     }
 
     // Return success with data

@@ -12,7 +12,7 @@ import SideBar from "../sidebar/sidebar";
 // Redux
 import { useAppSelector, useAppDispatch } from "../../GlobalRedux/hooks";
 import { hideoffCanvas } from "../../GlobalRedux/Features/offcanvas/offcanvasSlice";
-import { logout as logoutAction, login as loginAction,updateCountry,updateToken } from "../../GlobalRedux/Features/auth/authSlice"; // Import the logout action
+
 import { setShortName } from "../../GlobalRedux/Features/country/countrySlice";
 import { removeMapLayer, toggleSidebar, setBounds } from '../../GlobalRedux/Features/map/mapSlice';
 import { FaMoon, FaSun, FaInfoCircle  } from "react-icons/fa";
@@ -20,8 +20,9 @@ import { FaToggleOff, FaToggleOn } from "react-icons/fa";
 import { CiCircleChevLeft, CiCircleChevRight } from "react-icons/ci";
 import { HiMenuAlt3, HiX } from "react-icons/hi";
 import { get_url } from '../json/urls';
-import { login, logout } from '../../utils/api';
 import BottomOffCanvas from '../tools/bottom_offcanvas';
+import { useAuth } from "../../hooks/useAuth";
+
 
 function Navigationbar({ children }) {
   // Default to light mode
@@ -40,10 +41,10 @@ function Navigationbar({ children }) {
   const pathname = location.pathname;
   const dispatch = useAppDispatch();
   const mapLayer = useAppSelector((state) => state.mapbox.layers);
-  const userCountry = useAppSelector((state) => state.auth.country);
-  const isLoggedin = useAppSelector((state) => state.auth.isLoggedin);
+  // const userCountry = useAppSelector((state) => state.auth.country);
+  // const isLoggedin = useAppSelector((state) => state.auth.isLoggedin);
   const [previewRegion, setPreviewRegion] = useState(null);
-
+ const { isLoggedin, country: userCountry, loginUser, logoutUser } = useAuth();
   // Listen for transient region selections from Sidebar so logged-in users see a preview flag
   useEffect(() => {
     function handleRegionSelected(e) {
@@ -274,17 +275,14 @@ function Navigationbar({ children }) {
 
   // Handle logout with map zoom reset
   const handleLogoutWithMapReset = async () => {
-    const response = await handleClientLogout(); // Call the client-side logout function
-    if (response.success) {
+    try {
       // Remove restricted layers from map
       mapLayer.forEach(item => {
         if (item.layer_information && item.layer_information.restricted === true) {
           dispatch(removeMapLayer({ id: item.id}));
         }
       });
-      dispatch(logoutAction()); // Dispatch the Redux logout action
-      dispatch(updateCountry(null))
-      dispatch(updateToken(null))
+    await logoutUser();
       
       // Reset to default Pacific region bounds
       dispatch(setBounds({
@@ -300,7 +298,10 @@ function Navigationbar({ children }) {
       if (pathname !== '/') {
         navigate('/');
       }
+    } catch (err) {
+      console.error('Logout error:', err);
     }
+    
   };
 
   // Function to fetch country bounds and zoom to them
@@ -349,24 +350,29 @@ function Navigationbar({ children }) {
     setLoading(true); // Set loading to true when the login starts
     
     const formData = new FormData(e.target); // Get form data
-    const result = await handleClientLogin(formData); // Call the client-side login function
-    
-    setLoginState(result); // Update login state
-    setLoading(false); // Set loading to false once login is done
-    if (result.success) {
-      dispatch(loginAction()); // Update Redux store
-      dispatch(updateCountry(result.countryId))
-      dispatch(updateToken(result.token));
-      setShowLoginModal(false); // Close the modal
-      localStorage.setItem('selectedRegion', result.countryId);
-      dispatch(setShortName(result.countryId))
-      
+   const username = formData.get('username');
+    const password = formData.get('password');
+      try {
+         const result = await loginUser({ username, password });
+          if (result.success) {
+             setShowLoginModal(false); // Close the modal
+             localStorage.setItem('selectedRegion', result.user.countryId);
+             dispatch(setShortName(result.user.countryId))
       // Fetch country bounds and zoom to them
       await fetchCountryBoundsAndZoom(result.countryId);
       
       // Clear any previous errors
       setLoginState(null);
+      } else {
+        setLoginState({ errors: { general: [result.error] } });
+        
     }
+     } catch (err) {
+       console.error('Login error:', err);
+        setLoginState({ errors: { general: ['An unexpected error occurred'] } });
+        } finally {
+           setLoading(false);
+        }
   };
 
   return (

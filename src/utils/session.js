@@ -10,11 +10,11 @@ if (!secretKey) {
 
 const encodedKey = new TextEncoder().encode(secretKey);
 
-export async function createSession(countryId, userId) {
+export async function createSession(countryId, userId, token = null) {
   // 23 hours expiration (matching your Next.js version)
   const expiresAt = new Date(Date.now() + 23 * 60 * 60 * 1000);
   
-  const session = await encrypt({ countryId, userId, expiresAt });
+  const session = await encrypt({ countryId, userId, token, expiresAt });
   
   // Store in localStorage since we can't use HTTP-only cookies in client-side
   localStorage.setItem(SESSION_KEY, session);
@@ -83,6 +83,7 @@ export const getCurrentUser = async () => {
   return session ? {
     userId: session.userId,
     countryId: session.countryId,
+    token: session.token,
     expiresAt: session.expiresAt,
     // Add other user properties as needed
   } : null;
